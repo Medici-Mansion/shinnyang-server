@@ -1,29 +1,18 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+
+import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { LoggerMiddleware } from './middlewares/logger.middleware';
-
+import { DatabaseModule } from './database/database.module';
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: `.env.${process.env.NODE_ENV}`,
+    }),
     // 아직 어떤 db를 쓸지 정하지 않았음
-    // TypeOrmModule.forRoot({
-    //   type: '',
-    //   host: '',
-    //   port: ,
-    //   username: process.env.DB_USERNAME,
-    //   password: process.env.DB_PASSWORD,
-    //   database: process.env.DB_DATABASE,
-    //   autoLoadEntities: ,
-    //   keepConnectionAlive: ,
-    //   migrations: ,
-    //   charset: '',
-    //   synchronize: false,
-    //   logging: true,
-    // }),
-    // TypeOrmModule.forFeature([
-    //   // 사용할 모듈들 입력
-    // ]),
+    DatabaseModule,
   ],
   controllers: [AppController],
   providers: [AppService],
