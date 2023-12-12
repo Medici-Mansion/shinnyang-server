@@ -14,3 +14,5 @@ images:
 # 서비스 계정 이메일 설정
 serviceAccount: 'premium-archery-400204@appspot.gserviceaccount.com'
 
+options:
+  logging: CLOUD_LOGGING_ONLY
