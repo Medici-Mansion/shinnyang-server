@@ -14,6 +14,3 @@ images:
 # 서비스 계정 이메일 설정
 serviceAccount: 'premium-archery-400204@appspot.gserviceaccount.com'
 
-# 빌드 트리거 설정: 'master' 브랜치에 대한 커밋만 트리거
-trigger:
-  branchName: '^master$'
