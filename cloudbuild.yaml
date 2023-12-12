@@ -1,18 +1,21 @@
 steps:
   # Docker 이미지 빌드
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'asia-northeast3-docker.pkg.dev/premium-archery-400204/medici/shinnyang-server', '.']
+    args: ['build', '-t', 'gcr.io/premium-archery-400204/github.com/Medici-Mansion/shinnyang-server:$COMMIT_SHA', '.']
 
   # 이미지 푸시
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'asia-northeast3-docker.pkg.dev/premium-archery-400204/medici/shinnyang-server']
+    args: ['push', 'gcr.io/premium-archery-400204/github.com/Medici-Mansion/shinnyang-server:$COMMIT_SHA']
 
 # 이미지를 저장할 Google Container Registry
 images:
-  - 'asia-northeast3-docker.pkg.dev/premium-archery-400204/medici'
+  - 'gcr.io/premium-archery-400204/github.com/Medici-Mansion/shinnyang-server:$COMMIT_SHA'
+
 
 # 서비스 계정 이메일 설정
 serviceAccount: 'premium-archery-400204@appspot.gserviceaccount.com'
 
+
 options:
   logging: CLOUD_LOGGING_ONLY
+
