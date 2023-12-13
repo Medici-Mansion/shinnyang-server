@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, IsNumber } from 'class-validator';
+import { IsEmail, IsNumber } from 'class-validator';
 
 export class UserDto {
   @ApiProperty({ description: '회원 아이디' })
