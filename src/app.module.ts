@@ -5,6 +5,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { LoggerMiddleware } from './middlewares/logger.middleware';
 import { DatabaseModule } from './database/database.module';
+import { UserModule } from './users/user.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -13,6 +14,7 @@ import { DatabaseModule } from './database/database.module';
     }),
     // 아직 어떤 db를 쓸지 정하지 않았음
     DatabaseModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],
