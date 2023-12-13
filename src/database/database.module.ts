@@ -8,14 +8,13 @@ import { User } from 'src/entities/user';
       useFactory() {
         return {
           type: 'postgres',
-          host: 'localhost',
-          port: 5432,
-          username: 'root',
-          password: 'admin',
-          database: 'shinnyang',
-          entities: [User],
-          synchronize: true,
-          logging: true,
+          host: process.env.DB_HOST,
+          port: +process.env.DB_PORT,
+          username: process.env.DB_USER,
+          password: process.env.DB_PWD,
+          database: process.env.DB_NAME,
+          synchronize: process.env.NODE_ENV !== 'production',
+          logging: process.env.NODE_ENV !== 'production',
         };
       },
     }),
