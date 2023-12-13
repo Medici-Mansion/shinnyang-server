@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { User } from 'src/entities/Users';
+import { UserModule } from 'src/users/user.module';
 
 @Module({
   imports: [
@@ -18,6 +20,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         };
       },
     }),
+    UserModule,
   ],
 })
 export class DatabaseModule {}
