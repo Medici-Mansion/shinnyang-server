@@ -3,7 +3,7 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
-  const PORT = process.env.PORT || 3000
+  const PORT = process.env.PORT || 3000;
   const app = await NestFactory.create(AppModule);
   const config = new DocumentBuilder()
     .setTitle('Shinnyang Project')
@@ -15,6 +15,5 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
 
   await app.listen(PORT);
-
 }
 bootstrap();
