@@ -1,11 +1,11 @@
 import { DataSource, Repository } from 'typeorm';
-import { Letters } from './entities/letters.entity';
+import { Letter } from './entities/letter.entity';
 import { InjectDataSource } from '@nestjs/typeorm';
 import { PostLetterRequestDto } from './dtos/create-letters.dto';
 
-export class LettersRepository extends Repository<Letters> {
+export class LettersRepository extends Repository<Letter> {
   constructor(@InjectDataSource() dataSource: DataSource) {
-    super(Letters, dataSource.createEntityManager());
+    super(Letter, dataSource.createEntityManager());
   }
 
   async createLetter(postLetterRequestDto: PostLetterRequestDto) {

@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNumber, IsOptional, IsString } from 'class-validator';
-import { Letters } from '../entities/letters.entity';
+import { Letter } from '../entities/letter.entity';
 
 export class LetterDto {
   @ApiProperty({ description: '아이디' })
@@ -26,7 +26,7 @@ export class LetterDto {
 }
 
 export class GetLettersResponseDto extends LetterDto {
-  constructor(lettersEntity: Letters) {
+  constructor(lettersEntity: Letter) {
     super();
     this.id = lettersEntity.id;
     this.receiverId = lettersEntity.receiverId;
