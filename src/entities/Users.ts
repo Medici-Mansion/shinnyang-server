@@ -5,6 +5,7 @@ import {
   UpdateDateColumn,
   CreateDateColumn,
   DeleteDateColumn,
+  BaseEntity,
 } from 'typeorm';
 
 enum UserStatus {
@@ -14,7 +15,7 @@ enum UserStatus {
 }
 
 @Entity({ name: 'user' })
-export class User {
+export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
