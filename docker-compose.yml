@@ -6,8 +6,8 @@ services:
     container_name: my-postgres
     restart: always
     environment:
-      - POSTGRES_USER=test
-      - POSTGRES_PASSWORD=1234
+      - POSTGRES_USER=linkfriends_local
+      - POSTGRES_PASSWORD=Roqkfwk01!
     ports:
       - 5432:5432
 
