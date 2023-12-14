@@ -47,6 +47,6 @@ export class LettersController {
     },
   })
   async postLetters(@Body() postLetterRequestDto: PostLetterRequestDto) {
-    return this.lettersService.createLetters(postLetterRequestDto);
+    return this.lettersService.createLetter(postLetterRequestDto);
   }
 }
