@@ -13,8 +13,7 @@ import { LettersModule } from './letters/letters.module';
       envFilePath: `.env.${process.env.NODE_ENV}`,
     }),
     // 아직 어떤 db를 쓸지 정하지 않았음
-    DatabaseModule,
-    LettersModule,
+    DatabaseModule,    LettersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
