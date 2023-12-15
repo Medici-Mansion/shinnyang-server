@@ -12,8 +12,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
           username: process.env.DB_USER,
           password: process.env.DB_PWD,
           database: process.env.DB_NAME,
-          synchronize: process.env.NODE_ENV !== 'production',
-          logging: process.env.NODE_ENV !== 'production',
+          synchronize: false,
+          logging: true,
         };
       },
     }),
