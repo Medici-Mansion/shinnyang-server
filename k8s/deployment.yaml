@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: catsnewyear
+
 spec:
   replicas: 3
   selector:
@@ -14,7 +15,7 @@ spec:
     spec:
       containers:
       - name: catsnewyear
-        image: ghcr.io/medici/catsnewyear-server:latest
+        image: ghcr.io/medici-mansion/shinnyang-server
         resources:
           limits:
             memory: "128Mi"
