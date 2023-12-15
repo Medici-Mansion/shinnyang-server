@@ -22,8 +22,8 @@ jobs:
         with:
           push: true
           tags: |
-            ghcr.io/medici-mansion/shinnyang-server:latest
-            ghcr.io/medici-mansion/shinnyang-server:${{ github.sha }}
+            ghcr.io/medici/catsnewyear-server:latest
+            ghcr.io/medici/catsnewyear-server:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
   deploy:
@@ -46,4 +46,4 @@ jobs:
           manifests: |
             k8s/deployment.yaml
           images: |
-            ghcr.io/medici-mansion/shinnyang-server:${{ github.sha }}
+            ghcr.io/medici/catsnewyear-server:${{ github.sha }}
