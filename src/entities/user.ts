@@ -7,7 +7,7 @@ import {
   DeleteDateColumn,
 } from 'typeorm';
 
-enum UserStatus {
+export enum UserStatus {
   ACTIVE = 'active',
   SLEEP = 'sleep',
   WITHDRAWAL = 'withdrawal',
@@ -32,11 +32,11 @@ export class User {
   status: UserStatus;
 
   @CreateDateColumn()
-  createdAt: string;
+  createdAt: Date;
 
   @UpdateDateColumn()
-  updateadAt: string | null;
+  updatedAt: Date | null;
 
   @DeleteDateColumn({ nullable: true })
-  deletedAt: string | null;
+  deletedAt: Date | null;
 }

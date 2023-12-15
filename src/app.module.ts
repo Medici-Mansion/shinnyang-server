@@ -10,6 +10,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { LoggerMiddleware } from './middlewares/logger.middleware';
 import { DatabaseModule } from './database/database.module';
+import { UserController } from './user/user.controller';
+import { UserService } from './user/user.service';
 
 @Module({
   imports: [
@@ -20,13 +22,14 @@ import { DatabaseModule } from './database/database.module';
     // 아직 어떤 db를 쓸지 정하지 않았음
     DatabaseModule,
   ],
-  controllers: [AppController],
+  controllers: [AppController, UserController],
   providers: [
     AppService,
     {
       provide: APP_PIPE,
       useClass: ValidationPipe,
     },
+    UserService,
   ],
 })
 export class AppModule implements NestModule {
