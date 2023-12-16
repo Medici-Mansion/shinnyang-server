@@ -1,18 +1,12 @@
-import {
-  MiddlewareConsumer,
-  Module,
-  NestModule,
-  ValidationPipe,
-} from '@nestjs/common';
-import { APP_PIPE } from '@nestjs/core';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { LoggerMiddleware } from './middlewares/logger.middleware';
 import { DatabaseModule } from './database/database.module';
-import { UserController } from './user/user.controller';
-import { UserService } from './user/user.service';
-
+import { UserModule } from './users/user.module';
+import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -21,16 +15,11 @@ import { UserService } from './user/user.service';
     }),
     // 아직 어떤 db를 쓸지 정하지 않았음
     DatabaseModule,
+    UserModule,
+    AuthModule,
   ],
-  controllers: [AppController, UserController],
-  providers: [
-    AppService,
-    {
-      provide: APP_PIPE,
-      useClass: ValidationPipe,
-    },
-    UserService,
-  ],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

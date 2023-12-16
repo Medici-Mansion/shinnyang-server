@@ -1,42 +1,36 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-  CreateDateColumn,
-  DeleteDateColumn,
-} from 'typeorm';
+import { Entity, Column } from 'typeorm';
+import { BaseEntity } from 'src/common/base.entity';
 
-export enum UserStatus {
+enum UserStatus {
   ACTIVE = 'active',
   SLEEP = 'sleep',
   WITHDRAWAL = 'withdrawal',
 }
 
-@Entity()
-export class User {
-  @PrimaryGeneratedColumn()
-  id: number;
-
-  @Column()
+@Entity({ name: 'user' })
+export class User extends BaseEntity {
+  @Column({
+    name: 'email',
+    nullable: true,
+    comment: '사용자 이메일',
+  })
   email: string;
 
-  @Column()
-  nickname: string | null;
+  @Column({
+    name: 'nickname',
+    nullable: true,
+    comment: '사용자 닉네임',
+    unique: true,
+  })
+  nickname: string;
 
   @Column({
+    name: 'status',
+    nullable: true,
+    comment: '사용자의 회원 상태',
     type: 'enum',
     enum: UserStatus,
     default: UserStatus.ACTIVE,
   })
   status: UserStatus;
-
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date | null;
-
-  @DeleteDateColumn({ nullable: true })
-  deletedAt: Date | null;
 }
