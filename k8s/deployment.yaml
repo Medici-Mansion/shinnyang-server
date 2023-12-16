@@ -2,7 +2,14 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: catsnewyear
+
 spec:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  minReadySeconds: 20
   replicas: 3
   selector:
     matchLabels:
@@ -17,55 +24,55 @@ spec:
           image: sjc.vultrcr.com/medici/shin-server
           resources:
             limits:
-              memory: '128Mi'
-              cpu: '500m'
+              memory: '512Mi'
+              cpu: '1000m'
           ports:
             - containerPort: 3000
-          # envFrom:
-          #   - secretRef:
-          #       name: catsnewyear-prod
-          env:
-            - name: NODE_ENV
-              valueFrom:
-                secretKeyRef:
-                  name: catsnewyear-prod
-                  key: NODE_ENV
-                  optional: false
-            - name: PORT
-              valueFrom:
-                secretKeyRef:
-                  name: catsnewyear-prod
-                  key: PORT
-                  optional: false
-            - name: DB_HOST
-              valueFrom:
-                secretKeyRef:
-                  name: catsnewyear-prod
-                  key: DB_HOST
-                  optional: false
-            - name: DB_PORT
-              valueFrom:
-                secretKeyRef:
-                  name: catsnewyear-prod
-                  key: DB_PORT
-                  optional: false
-            - name: DB_USER
-              valueFrom:
-                secretKeyRef:
-                  name: catsnewyear-prod
-                  key: DB_USER
-                  optional: false
-            - name: DB_PWD
-              valueFrom:
-                secretKeyRef:
-                  name: catsnewyear-prod
-                  key: DB_PWD
-                  optional: false
-            - name: DB_NAME
-              valueFrom:
-                secretKeyRef:
-                  name: catsnewyear-prod
-                  key: DB_NAME
-                  optional: false
+          envFrom:
+            - secretRef:
+                name: catsnewyear-prod
+          # env:
+          #   - name: NODE_ENV
+          #     valueFrom:
+          #       secretKeyRef:
+          #         name: catsnewyear-prod
+          #         key: NODE_ENV
+          #         optional: false
+          #   - name: PORT
+          #     valueFrom:
+          #       secretKeyRef:
+          #         name: catsnewyear-prod
+          #         key: PORT
+          #         optional: false
+          #   - name: DB_HOST
+          #     valueFrom:
+          #       secretKeyRef:
+          #         name: catsnewyear-prod
+          #         key: DB_HOST
+          #         optional: false
+          #   - name: DB_PORT
+          #     valueFrom:
+          #       secretKeyRef:
+          #         name: catsnewyear-prod
+          #         key: DB_PORT
+          #         optional: false
+          #   - name: DB_USER
+          #     valueFrom:
+          #       secretKeyRef:
+          #         name: catsnewyear-prod
+          #         key: DB_USER
+          #         optional: false
+          #   - name: DB_PWD
+          #     valueFrom:
+          #       secretKeyRef:
+          #         name: catsnewyear-prod
+          #         key: DB_PWD
+          #         optional: false
+          #   - name: DB_NAME
+          #     valueFrom:
+          #       secretKeyRef:
+          #         name: catsnewyear-prod
+          #         key: DB_NAME
+          #         optional: false
       imagePullSecrets:
         - name: vultr-registry
