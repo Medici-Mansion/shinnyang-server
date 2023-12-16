@@ -8,5 +8,7 @@ declare namespace NodeJS {
     readonly DB_NAME: string;
     readonly REDIS_HOST: string;
     readonly REDIS_PASSWORD: string;
+    readonly REDIRECT_URL: string;
+    readonly KAKAO_APIKEY: string;
   }
 }
