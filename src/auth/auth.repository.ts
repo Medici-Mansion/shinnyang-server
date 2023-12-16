@@ -6,8 +6,4 @@ import { DataSource } from 'typeorm';
 export class AuthRepository {
   constructor(@InjectDataSource() private readonly connection: DataSource) {}
   // 상의 필요
-
-  async createtoken() {
-    return '1234';
-  }
 }
