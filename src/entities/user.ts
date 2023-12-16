@@ -1,7 +1,7 @@
 import { Entity, Column } from 'typeorm';
 import { BaseEntity } from 'src/common/base.entity';
 
-enum UserStatus {
+export enum UserStatus {
   ACTIVE = 'active',
   SLEEP = 'sleep',
   WITHDRAWAL = 'withdrawal',
