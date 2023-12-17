@@ -39,17 +39,14 @@ export class AuthService {
   //   return;
   // }
 
-  async kakaoLogin(
+  async getGoogleAccessToken(
     postAccessTokenRequestDto: PostAccessTokenRequestDto,
   ): Promise<PostAccessTokenResponseDto> {
     const { code } = postAccessTokenRequestDto;
     const { data } = await axios.post(
-      `https://kauth.kakao.com/oauth/token`,
+      `https://oauth2.googleapis.com/token`,
       {
-        grant_type: 'authorization_code',
-        client_id: process.env.KAKAO_APIKEY,
-        code,
-        redirect_uri: process.env.REDIRECT_URL,
+        fdfd: 'fdfd',
       },
       {
         headers: {

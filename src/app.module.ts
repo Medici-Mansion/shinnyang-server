@@ -9,6 +9,7 @@ import { LettersModule } from './letters/letters.module';
 import { UserModule } from './users/user.module';
 import { AuthModule } from './auth/auth.module';
 import { RedisModule } from './redis/redis.module';
+import { JwtModule } from './jwt/jwt.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -21,6 +22,7 @@ import { RedisModule } from './redis/redis.module';
     UserModule,
     AuthModule,
     RedisModule,
+    JwtModule,
   ],
   controllers: [AppController],
   providers: [AppService],
