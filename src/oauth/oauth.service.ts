@@ -2,10 +2,19 @@ import { UserService } from './../users/user.service';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import axios from 'axios';
 import { GoogleUserInfo } from './dtos/google.dto';
+import { JwtService } from 'src/jwt/jwt.service';
+import { InjectDataSource } from '@nestjs/typeorm';
+import { DataSource } from 'typeorm';
+import { User } from 'src/users/entities/user.entity';
 
 @Injectable()
 export class OauthService {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly jwtService: JwtService,
+    @InjectDataSource()
+    private readonly dataSource: DataSource,
+  ) {}
   async userFromGoogle(code: string) {
     const form = new FormData();
     form.append('client_id', process.env.GOOGLE_AUTH_CLIENT_ID);
@@ -31,6 +40,9 @@ export class OauthService {
     const googleUesr = userResponse.data as GoogleUserInfo;
 
     const user = await this.userService.findByUserEmail(googleUesr.email);
-    return user;
+    const token = this.jwtService.sign(user.id);
+    user.refresh = token.refresh;
+    await this.dataSource.getRepository(User).save(user);
+    return { token, user };
   }
 }

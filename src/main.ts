@@ -21,9 +21,10 @@ async function bootstrap() {
     .setDescription('The Shinnyang Project description')
     .setVersion('1.0')
     .addTag('cat')
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('api-docs', app, document);
 
   await app.listen(PORT);
 }

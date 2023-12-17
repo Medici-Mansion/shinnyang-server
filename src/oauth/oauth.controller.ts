@@ -2,8 +2,10 @@ import { Controller, Get, Query, Res } from '@nestjs/common';
 import { OauthService } from './oauth.service';
 import { Response } from 'express';
 import { URL } from 'url';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('oauth')
+@ApiTags('Oauth API')
 export class OauthController {
   constructor(private readonly oauthService: OauthService) {}
 

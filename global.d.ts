@@ -6,16 +6,13 @@ declare namespace NodeJS {
     readonly DB_USER: string;
     readonly DB_PWD: string;
     readonly DB_NAME: string;
-    readonly REDIS_HOST: string;
-    readonly REDIS_PORT: string;
-    readonly REDIS_PASSWORD: string;
     readonly GOOGLE_API_KEY: string;
     readonly GOOGLE_AUTH_CLIENT_ID: string;
     readonly GOOGLE_REDIRECT_URL: string;
     readonly OOGLE_AUTH_CLIENT_SECRET: string;
-    readonly JWT_SECRET: string;
-    readonly JWT_EXPIRATION: string;
-    readonly JWT_REFRESH_EXPIRATION: string;
-    readonly GOOGLE_CLIENT_SECRET: string;
+    readonly SALT: string;
+    readonly ROUND: string;
+    readonly EXPIRESTOKEN: string;
+    readonly RES_EXPIRESTOKEN: string;
   }
 }
