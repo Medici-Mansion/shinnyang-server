@@ -1,4 +1,4 @@
-import { Controller, Get, Query, Res } from '@nestjs/common';
+import { Controller, Get, Logger, Query, Res } from '@nestjs/common';
 import { OauthService } from './oauth.service';
 import { Response } from 'express';
 import { URL } from 'url';
@@ -16,6 +16,7 @@ import { JWT } from 'src/auth/dtos/jwt.dto';
 @ApiExtraModels(GoogleAuthResponse, UserResponse, JWT)
 @ApiTags('Oauth API')
 export class OauthController {
+  private readonly logger = new Logger(OauthController.name);
   constructor(private readonly oauthService: OauthService) {}
 
   @Get('google/auth')
@@ -42,6 +43,14 @@ export class OauthController {
   })
   @Get('google/user')
   async getUserFromGoogle(@Query('code') code: string) {
-    return await this.oauthService.userFromGoogle(code);
+    try {
+      return await this.oauthService.userFromGoogle(code);
+    } catch (err) {
+      this.logger.log(err?.message);
+      console.log(err);
+      return {
+        err: err?.message,
+      };
+    }
   }
 }
