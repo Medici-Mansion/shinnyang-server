@@ -1,12 +1,4 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Header,
-  Post,
-  Query,
-  Res,
-} from '@nestjs/common';
+import { Controller, Get, Res } from '@nestjs/common';
 import { Response } from 'express';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
@@ -20,19 +12,22 @@ import {
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Get('/login')
-  @Header('Content-Type', 'text/html')
-  async kakaoRedirect(@Res() res: Response): Promise<void> {
-    const url = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${process.env.KAKAO_APIKEY}&redirect_uri=${process.env.REDIRECT_URL}`;
+  @Get('/access-token') // code 받아오는 엔드포인트 4%2F0AfJohXmn0sJKMg_ma1VbI4CfrUO176trAKku1GPVoZ-Wu4EsWG7gGDjHrm-H3qlsPMgxrA
+  // @Header('Content-Type', 'text/html')
+  async googleRedirect(@Res() res: Response): Promise<void> {
+    const url = `https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?client_id=${process.env.GOOGLE_AUTH_CLIENT_ID}&redirect_uri=${process.env.GOOGLE_REDIRECT_URL}&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email&access_type=offline`;
+    // const urlTest = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.GOOGLE_AUTH_CLIENT_ID}&redirect_uri=${process.env.GOOGLE_REDIRECT_URL}&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email&access_type=offline`;
+    // 위 urlTest는 url과 동작이 같음
+
     res.redirect(url);
   }
 
-  @Get('/kakao')
-  async getKakaoInfo(
-    @Query() postAccessTokenRequestDto: PostAccessTokenRequestDto,
-  ): Promise<PostAccessTokenResponseDto> {
-    return this.authService.kakaoLogin(postAccessTokenRequestDto);
-  }
+  // @Get('/access-token')
+  // async getGoogleInfo(
+  //   @Query() postAccessTokenRequestDto: PostAccessTokenRequestDto,
+  // ): Promise<PostAccessTokenResponseDto> {
+  //   return this.authService.getGoogleAccessToken(postAccessTokenRequestDto);
+  // }
 }
 
 // 컨트롤러 -> 서비스 -> 레포
