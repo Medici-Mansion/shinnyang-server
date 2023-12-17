@@ -1,5 +1,5 @@
-import { ApiProperty, PickType } from '@nestjs/swagger';
-import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class PostAccessTokenRequestDto {
   @ApiProperty({ description: '인가 코드 받기 요청으로 얻은 인가 코드' })
@@ -33,7 +33,7 @@ export class PostAccessTokenResponseDto {
   })
   @IsNumber()
   @IsNotEmpty()
-  expires_in: Number;
+  expires_in: number;
 
   @ApiProperty({
     description:
@@ -47,5 +47,5 @@ export class PostAccessTokenResponseDto {
   })
   @IsNumber()
   @IsNotEmpty()
-  refresh_token_expires_in: Number;
+  refresh_token_expires_in: number;
 }
