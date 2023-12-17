@@ -20,15 +20,12 @@ export class OauthController {
       'https://www.googleapis.com/auth/userinfo.email',
     );
     url.searchParams.set('access_type', 'offline');
-    console.log(
-      process.env.GOOGLE_REDIRECT_URL,
-      '<<process.env.GOOGLE_REDIRECT_URL',
-    );
     return res.redirect(url.toString());
   }
 
   @Get('google/user')
-  getUserFromGoogle(@Query('code') code: string) {
-    return this.oauthService.userFromGoogle(code);
+  async getUserFromGoogle(@Query('code') code: string) {
+    const user = await this.oauthService.userFromGoogle(code);
+    return user;
   }
 }
