@@ -21,13 +21,6 @@ export class AuthController {
 
     res.redirect(url);
   }
-
-  // @Get('/access-token')
-  // async getGoogleInfo(
-  //   @Query() postAccessTokenRequestDto: PostAccessTokenRequestDto,
-  // ): Promise<PostAccessTokenResponseDto> {
-  //   return this.authService.getGoogleAccessToken(postAccessTokenRequestDto);
-  // }
 }
 
 // 컨트롤러 -> 서비스 -> 레포

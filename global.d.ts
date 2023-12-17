@@ -17,5 +17,8 @@ declare namespace NodeJS {
     readonly JWT_EXPIRATION: string;
     readonly JWT_REFRESH_EXPIRATION: string;
     readonly GOOGLE_CLIENT_SECRET: string;
+    readonly JWT_SECRET: string;
+    readonly JWT_EXPIRATION: string;
+    readonly JWT_REFRESH_EXPIRATION: string;
   }
 }
