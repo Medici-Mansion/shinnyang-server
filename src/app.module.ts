@@ -2,14 +2,11 @@ import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { LoggerMiddleware } from './middlewares/logger.middleware';
 import { DatabaseModule } from './database/database.module';
 import { UserModule } from './users/user.module';
 import { AuthModule } from './auth/auth.module';
-import { RedisModule } from './redis/redis.module';
-import { JwtModule } from './jwt/jwt.module';
-import { UserService } from './users/user.service';
+import { OauthModule } from './oauth/oauth.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -20,11 +17,10 @@ import { UserService } from './users/user.service';
     DatabaseModule,
     UserModule,
     AuthModule,
-    RedisModule,
-    JwtModule,
+    OauthModule,
   ],
   controllers: [AppController],
-  providers: [AppService, UserService],
+  providers: [],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

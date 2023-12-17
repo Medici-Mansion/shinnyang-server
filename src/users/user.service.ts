@@ -28,7 +28,7 @@ export class UserService {
   async findByUserEmail(email: string) {
     const result = await this.connection
       .createQueryBuilder(User, 'users')
-      .where('user.email = :email', { email })
+      .where('users.email = :email', { email })
       .getOne();
 
     return result;
