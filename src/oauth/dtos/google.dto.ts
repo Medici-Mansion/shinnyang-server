@@ -5,26 +5,29 @@ import { UserResponse } from 'src/users/dtos/user.dto';
 import { User } from 'src/users/entities/user.entity';
 
 export class GoogleUserInfo {
-  @ApiProperty()
+  @ApiProperty({ description: '아이디' })
   @IsString()
   id: string;
 
-  @ApiProperty()
+  @ApiProperty({ description: '이메일' })
   @IsEmail()
   email: string;
 
-  @ApiProperty()
+  @ApiProperty({ description: '이메일 검증 여부' })
   @IsBoolean()
   verified_email: boolean;
 
-  @ApiProperty()
+  @ApiProperty({ description: '프로필 사진 주소' })
   @IsOptional()
   @IsString()
   picture: string;
 }
 
 export class GoogleAuthResponse {
+  @ApiProperty({ type: () => JWT })
   token: JWT;
+
+  @ApiProperty({ type: () => UserResponse })
   user: UserResponse;
 
   constructor(token: JWT, user: User) {
