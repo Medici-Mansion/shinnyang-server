@@ -5,6 +5,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { LoggerMiddleware } from './middlewares/logger.middleware';
 import { DatabaseModule } from './database/database.module';
+import { LettersModule } from './letters/letters.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -12,7 +13,7 @@ import { DatabaseModule } from './database/database.module';
       envFilePath: `.env.${process.env.NODE_ENV}`,
     }),
     // 아직 어떤 db를 쓸지 정하지 않았음
-    DatabaseModule,
+    DatabaseModule,    LettersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
