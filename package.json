@@ -1,8 +1,12 @@
 {
   "name": "shinnyang",
-  "version": "0.0.1",
+  "version": "0.1.1",
   "description": "",
-  "author": "",
+  "author": {
+    "name": "Medici",
+    "email": "raymondanything@gmail.com",
+    "url": "https://www.medici-mansion.com"
+  },
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
@@ -33,7 +37,7 @@
     "bcrypt": "^5.1.1",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
-    "dotenv": "^16.3.1",
+    "cross-env": "^7.0.3",
     "joi": "^17.11.0",
     "pg": "^8.11.3",
     "reflect-metadata": "^0.1.13",
