@@ -14,7 +14,7 @@ export class AuthService {
 
   async refreshToken(refresh: string): Promise<JWT> {
     this.verify(refresh, {
-      secret: process.env.RES_SALT,
+      secret: process.env.SALT,
     });
 
     const queryRunner = this.dataSource.createQueryRunner();
