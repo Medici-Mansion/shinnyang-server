@@ -1,3 +1,4 @@
+import { AuthService } from './../auth.service';
 import {
   CanActivate,
   ExecutionContext,
@@ -6,11 +7,10 @@ import {
 } from '@nestjs/common';
 import { Request } from 'express';
 import { Observable } from 'rxjs';
-import { JwtService } from 'src/jwt/jwt.service';
 
 @Injectable()
 export class AccessGuard implements CanActivate {
-  constructor(private readonly jwtService: JwtService) {}
+  constructor(private readonly authService: AuthService) {}
 
   canActivate(
     context: ExecutionContext,
@@ -20,7 +20,7 @@ export class AccessGuard implements CanActivate {
     if (!token) {
       throw new UnauthorizedException();
     }
-    const payload = this.jwtService.verify(token, {
+    const payload = this.authService.verify(token, {
       secret: process.env.SALT,
     });
 
