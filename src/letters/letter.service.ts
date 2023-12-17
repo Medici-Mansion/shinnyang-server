@@ -1,16 +1,16 @@
-import { LettersRepository } from './letters.repository';
+import { LetterRepository } from './letter.repository';
 import { Injectable } from '@nestjs/common';
 import { createResponse } from 'src/utils/response.utils';
-import { GetLettersResponseDto } from './dtos/letters.dto';
+import { GetLettersResponseDto } from './dtos/letter.dto';
 import { Response } from 'src/common/interface';
 import {
   PostLetterRequestDto,
   PostLetterResponseDto,
-} from './dtos/create-letters.dto';
+} from './dtos/create-letter.dto';
 
 @Injectable()
-export class LettersService {
-  constructor(private readonly lettersRepository: LettersRepository) {}
+export class LetterService {
+  constructor(private readonly lettersRepository: LetterRepository) {}
 
   /**
    * 편지를 조회한다.
@@ -20,11 +20,23 @@ export class LettersService {
    * @author raymondanything
    * @returns {Promise<Response <GetLettersResponseDto[]>>} GetLettersResponseDto[]
    */
-  async getLetters(): Promise<Response<GetLettersResponseDto[]>> {
-    const lettersResult = await this.lettersRepository.find();
+  async getLetterList(id: number): Promise<Response<GetLettersResponseDto[]>> {
+    const letterList = await this.lettersRepository.find({
+      where: { receiverId: id },
+      order: { createdAt: 'asc' },
+    });
     return createResponse(
-      lettersResult.map((letters) => new GetLettersResponseDto(letters)),
+      letterList.map((letter) => new GetLettersResponseDto(letter)),
     );
+  }
+
+  async getLetterDetail(
+    letterId: number,
+  ): Promise<Response<GetLettersResponseDto>> {
+    const letter = await this.lettersRepository.findOne({
+      where: { id: letterId },
+    });
+    return createResponse(new GetLettersResponseDto(letter));
   }
 
   /**
@@ -42,5 +54,9 @@ export class LettersService {
     const newLetter =
       await this.lettersRepository.createLetter(postLetterRequestDto);
     return createResponse(new PostLetterResponseDto(newLetter.id));
+  }
+
+  createAnswer(postLetterRequestDto: PostLetterRequestDto) {
+    return Promise.resolve(undefined);
   }
 }
