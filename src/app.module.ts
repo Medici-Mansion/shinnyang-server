@@ -7,7 +7,6 @@ import { LetterModule } from './letters/letter.module';
 import { UserModule } from './users/user.module';
 import { AuthModule } from './auth/auth.module';
 import { OauthModule } from './oauth/oauth.module';
-import { JwtModule } from './jwt/jwt.module';
 import * as joi from 'joi';
 @Module({
   imports: [
@@ -35,7 +34,6 @@ import * as joi from 'joi';
     UserModule,
     AuthModule,
     OauthModule,
-    JwtModule,
   ],
   controllers: [AppController],
   providers: [],
