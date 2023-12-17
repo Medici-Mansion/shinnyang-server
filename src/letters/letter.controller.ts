@@ -8,7 +8,7 @@ import {
   getSchemaPath,
 } from '@nestjs/swagger';
 import { LetterService } from './letter.service';
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query, UseGuards } from '@nestjs/common';
 import { GetLettersResponseDto } from './dtos/letter.dto';
 import { Response } from 'src/common/interface';
 import {
@@ -55,7 +55,7 @@ export class LetterController {
     },
   })
   async getLetterDetail(
-    letterId: number,
+    @Param('letterId') letterId: number,
   ): Promise<Response<GetLettersResponseDto>> {
     return this.lettersService.getLetterDetail(letterId);
   }
