@@ -13,28 +13,24 @@ export class OauthService {
     form.append('code', code);
     form.append('grant_type', 'authorization_code');
     form.append('redirect_uri', process.env.GOOGLE_REDIRECT_URL);
-    try {
-      const response = await axios.post(
-        'https://oauth2.googleapis.com/token',
-        form,
-      );
-      if (!response.data['access_token']) {
-        return new BadRequestException('Access-Token을 받아오지 못 했습니다.');
-      }
-      // 회원정보 가져오기
-      const userUrl = 'https://www.googleapis.com/oauth2/v2/userinfo';
-      const userResponse = await axios.get(userUrl, {
-        params: {
-          access_token: response.data['access_token'],
-        },
-      });
-
-      const googleUesr = userResponse.data as GoogleUserInfo;
-
-      const user = await this.userService.findByUserEmail(googleUesr.email);
-      return user;
-    } catch (err) {
-      console.log(err);
+    const response = await axios.post(
+      'https://oauth2.googleapis.com/token',
+      form,
+    );
+    if (!response.data['access_token']) {
+      throw new BadRequestException('Access-Token을 받아오지 못 했습니다.');
     }
+    // 회원정보 가져오기
+    const userUrl = 'https://www.googleapis.com/oauth2/v2/userinfo';
+    const userResponse = await axios.get(userUrl, {
+      params: {
+        access_token: response.data['access_token'],
+      },
+    });
+
+    const googleUesr = userResponse.data as GoogleUserInfo;
+
+    const user = await this.userService.findByUserEmail(googleUesr.email);
+    return user;
   }
 }
