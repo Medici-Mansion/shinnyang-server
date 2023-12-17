@@ -13,6 +13,7 @@ export class User extends BaseEntity {
     name: 'email',
     nullable: true,
     comment: '사용자 이메일',
+    unique: true,
   })
   email: string;
 
@@ -20,7 +21,6 @@ export class User extends BaseEntity {
     name: 'nickname',
     nullable: true,
     comment: '사용자 닉네임',
-    unique: true,
   })
   nickname: string;
 
