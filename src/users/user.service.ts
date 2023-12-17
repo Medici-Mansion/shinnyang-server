@@ -26,6 +26,14 @@ export class UserService {
     return createResponse(new PostUserResponseDto(result.generatedMaps[0].id));
   }
 
+  async create(postUserRequestDto: PostUserRequestDto) {
+    const { email } = postUserRequestDto;
+    const repository = this.connection.getRepository(User);
+    const result = await repository.save(repository.create({ email }));
+
+    return result;
+  }
+
   async findByUserEmail(email: string) {
     const result = await this.connection
       .createQueryBuilder(User, 'users')
