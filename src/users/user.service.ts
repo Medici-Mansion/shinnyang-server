@@ -1,6 +1,7 @@
+import { UserResponse } from './dtos/user.dto';
 import { Injectable } from '@nestjs/common';
 import { InjectDataSource } from '@nestjs/typeorm';
-import { User } from 'src/entities/user.entity';
+import { User } from 'src/users/entities/user.entity';
 import { DataSource } from 'typeorm';
 import {
   PostUserRequestDto,
@@ -32,5 +33,12 @@ export class UserService {
       .getOne();
 
     return result;
+  }
+
+  async getMe(id: number) {
+    const user = await this.connection
+      .getRepository(User)
+      .findOne({ where: { id } });
+    return new UserResponse(user);
   }
 }

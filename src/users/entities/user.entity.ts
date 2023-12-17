@@ -21,7 +21,7 @@ export class User extends BaseEntity {
     nullable: true,
     comment: '사용자 닉네임',
   })
-  nickname: string;
+  nickname: string | null;
 
   @Column({
     name: 'status',
@@ -31,4 +31,7 @@ export class User extends BaseEntity {
     default: UserStatus.ACTIVE,
   })
   status: UserStatus;
+
+  @Column({ name: 'refresh_token', nullable: true, comment: '리프레시 토큰' })
+  refresh: string | null;
 }

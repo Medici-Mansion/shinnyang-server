@@ -1,4 +1,5 @@
 import {
+  ApiBearerAuth,
   ApiCreatedResponse,
   ApiExtraModels,
   ApiOkResponse,
@@ -7,13 +8,14 @@ import {
   getSchemaPath,
 } from '@nestjs/swagger';
 import { LettersService } from './letters.service';
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { GetLettersResponseDto } from './dtos/letters.dto';
 import { Response } from 'src/common/interface';
 import {
   PostLetterRequestDto,
   PostLetterResponseDto,
 } from './dtos/create-letters.dto';
+import { AccessGuard } from 'src/auth/guards/acess.guard';
 
 @Controller('letters')
 @ApiTags('Letters API')
@@ -21,6 +23,8 @@ import {
 export class LettersController {
   constructor(private readonly lettersService: LettersService) {}
   @Get()
+  @UseGuards(AccessGuard)
+  @ApiBearerAuth()
   @ApiOperation({
     summary: '내가 받은 편지 목록 조회',
     description: '내가 받은 편지 목록을 조회한다',

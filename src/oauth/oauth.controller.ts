@@ -2,8 +2,19 @@ import { Controller, Get, Query, Res } from '@nestjs/common';
 import { OauthService } from './oauth.service';
 import { Response } from 'express';
 import { URL } from 'url';
+import {
+  ApiExtraModels,
+  ApiOkResponse,
+  ApiTags,
+  getSchemaPath,
+} from '@nestjs/swagger';
+import { GoogleAuthResponse } from './dtos/google.dto';
+import { UserResponse } from 'src/users/dtos/user.dto';
+import { JWT } from 'src/auth/dtos/jwt.dto';
 
 @Controller('oauth')
+@ApiExtraModels(GoogleAuthResponse, UserResponse, JWT)
+@ApiTags('Oauth API')
 export class OauthController {
   constructor(private readonly oauthService: OauthService) {}
 
@@ -23,9 +34,14 @@ export class OauthController {
     return res.redirect(url.toString());
   }
 
+  @ApiOkResponse({
+    description: '구글 로그인 및 토큰 정보',
+    schema: {
+      $ref: getSchemaPath(GoogleAuthResponse),
+    },
+  })
   @Get('google/user')
   async getUserFromGoogle(@Query('code') code: string) {
-    const user = await this.oauthService.userFromGoogle(code);
-    return user;
+    return await this.oauthService.userFromGoogle(code);
   }
 }
