@@ -1,9 +1,23 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Controller,
+  Get,
+  HttpException,
+  Logger,
+  NotFoundException,
+  Query,
+} from '@nestjs/common';
 import { AppService } from './app.service';
 import axios from 'axios';
+import { UserService } from './users/user.service';
+import { PostUserRequestDto } from './users/dtos/create-users.dto';
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(
+    private readonly appService: AppService,
+    private readonly userService: UserService,
+  ) {}
 
   @Get()
   getHello(): string {
@@ -29,22 +43,34 @@ export class AppController {
         'https://oauth2.googleapis.com/token',
         form,
       );
-      // console.log('access_token =', response.data);
-      if (response.data['access_token']) {
-        const userUrl = 'https://www.googleapis.com/oauth2/v2/userinfo';
 
-        const user = await axios.get(userUrl, {
-          params: {
-            access_token: response.data['access_token'],
-          },
-        });
-        // console.log('user-datas = ',user.data);
-        return user.data;
+      if (!response.data['access_token']) {
+        return new BadRequestException('Access-Token을 받아오지 못 했습니다.');
       }
-      console.log(response.data);
-      return response.data;
+
+      // 회원정보 가져오기
+      const userUrl = 'https://www.googleapis.com/oauth2/v2/userinfo';
+      const user = await axios.get(userUrl, {
+        params: {
+          access_token: response.data['access_token'],
+        },
+      });
+      const email = user?.data?.email;
+      if (!email) return new NotFoundException('email을 받아오지 못 했습니다.');
+
+      console.log('1');
+      const foundEmail = await this.userService.findByUserEmail(email);
+      if (foundEmail) {
+        return new ConflictException('중복되는 email이 있습니다.');
+      }
+      console.log('2');
+
+      //insert user
+      this.userService.createUser(email); // PostUserRequestDto
+
+      return 'ok';
     } catch (err) {
-      console.log(err);
+      Logger.error(err);
     }
     return false;
   }

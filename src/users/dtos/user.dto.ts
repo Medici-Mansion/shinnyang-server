@@ -18,5 +18,3 @@ export class UserDto {
   })
   status: string;
 }
-
-export class ROUserDto {}
