@@ -11,7 +11,7 @@ export enum UserStatus {
 export class User extends BaseEntity {
   @Column({
     name: 'email',
-    nullable: true,
+    nullable: false,
     comment: '사용자 이메일',
   })
   email: string;
