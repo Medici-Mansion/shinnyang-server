@@ -10,6 +10,7 @@ import { UserModule } from './users/user.module';
 import { AuthModule } from './auth/auth.module';
 import { RedisModule } from './redis/redis.module';
 import { JwtModule } from './jwt/jwt.module';
+import { UserService } from './users/user.service';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -25,7 +26,7 @@ import { JwtModule } from './jwt/jwt.module';
     JwtModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, UserService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
