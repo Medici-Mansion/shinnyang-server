@@ -1,9 +1,10 @@
-import { Controller, Get, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { AccessGuard } from 'src/auth/guards/acess.guard';
 import { AuthUser } from 'src/auth/decorators/auth-user.decorator';
 import { Payload } from 'src/auth/dtos/jwt.dto';
 import {
+  ApiBearerAuth,
   ApiExtraModels,
   ApiOkResponse,
   ApiOperation,
@@ -11,8 +12,10 @@ import {
   getSchemaPath,
 } from '@nestjs/swagger';
 import { UserResponse } from './dtos/user.dto';
+import { ChangeNicknameDTO } from './dtos/set-nickname.dto';
 
 @Controller('user')
+@ApiBearerAuth()
 @ApiExtraModels(UserResponse)
 @ApiTags('User API')
 export class UserController {
@@ -32,5 +35,23 @@ export class UserController {
   @Get('me')
   async getMe(@AuthUser() { id }: Payload) {
     return await this.userService.getMe(id);
+  }
+
+  @ApiOperation({
+    summary: '닉네임 변경',
+    description: '나의 닉네임을 설정/변경한다.',
+  })
+  @ApiOkResponse({
+    description: '성공 여부',
+    type: Boolean,
+  })
+  @ApiBearerAuth()
+  @UseGuards(AccessGuard)
+  @Post('nickname')
+  async changeNickname(
+    @AuthUser() { id }: Payload,
+    @Body() changeNicknameDTO: ChangeNicknameDTO,
+  ) {
+    return await this.userService.changeNickname(id, changeNicknameDTO);
   }
 }

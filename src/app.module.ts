@@ -3,7 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { LoggerMiddleware } from './middlewares/logger.middleware';
 import { DatabaseModule } from './database/database.module';
-import { LettersModule } from './letters/letters.module';
+import { LetterModule } from './letters/letter.module';
 import { UserModule } from './users/user.module';
 import { AuthModule } from './auth/auth.module';
 import { OauthModule } from './oauth/oauth.module';
@@ -29,7 +29,7 @@ import * as joi from 'joi';
         RES_EXPIRESTOKEN: joi.string().required(),
       }),
     }),
-    LettersModule,
+    LetterModule,
     DatabaseModule,
     UserModule,
     AuthModule,

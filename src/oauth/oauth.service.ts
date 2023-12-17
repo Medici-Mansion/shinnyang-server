@@ -40,7 +40,10 @@ export class OauthService {
 
     const googleUesr = userResponse.data as GoogleUserInfo;
 
-    const user = await this.userService.findByUserEmail(googleUesr.email);
+    let user = await this.userService.findByUserEmail(googleUesr.email);
+    if (!user) {
+      user = await this.userService.create({ email: googleUesr.email });
+    }
     const token = this.authService.sign(user.id);
     user.refresh = token.refresh;
     await this.dataSource.getRepository(User).save(user);
