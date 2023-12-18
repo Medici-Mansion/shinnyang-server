@@ -1,42 +1,23 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 import { CommonService } from './common.service';
-import { CreateCommonDto } from './dto/create-common.dto';
-import { UpdateCommonDto } from './dto/update-common.dto';
+import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { CatDTO } from './dto/cat.dto';
 
+@ApiTags('Common API')
 @Controller('common')
 export class CommonController {
   constructor(private readonly commonService: CommonService) {}
 
-  @Post()
-  create(@Body() createCommonDto: CreateCommonDto) {
-    return this.commonService.create(createCommonDto);
-  }
-
-  @Get()
-  findAll() {
-    return this.commonService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.commonService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCommonDto: UpdateCommonDto) {
-    return this.commonService.update(+id, updateCommonDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.commonService.remove(+id);
+  @ApiOperation({
+    description: '냥이 정보 조회',
+    summary: '이미지를 보유한 냥이정보를 조회한다.',
+  })
+  @ApiOkResponse({
+    description: '냥이 정보 조회 성공',
+    type: [CatDTO],
+  })
+  @Get('cats')
+  async getCatsData() {
+    return await this.commonService.findAllCats();
   }
 }

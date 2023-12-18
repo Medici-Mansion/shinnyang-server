@@ -29,8 +29,8 @@ import Joi from '@hapi/joi';
       }),
     }),
     // 아직 어떤 db를 쓸지 정하지 않았음
-    LettersModule,
     DatabaseModule,
+    LettersModule,
     UserModule,
     AuthModule,
     OauthModule,
