@@ -3,7 +3,6 @@ import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { LoggerMiddleware } from './middlewares/logger.middleware';
 import { DatabaseModule } from './database/database.module';
-import { LettersModule } from './letters/letters.module';
 import { UserModule } from './users/user.module';
 import { AuthModule } from './auth/auth.module';
 import { OauthModule } from './oauth/oauth.module';
@@ -30,7 +29,6 @@ import Joi from '@hapi/joi';
     }),
     // 아직 어떤 db를 쓸지 정하지 않았음
     DatabaseModule,
-    LettersModule,
     UserModule,
     AuthModule,
     OauthModule,

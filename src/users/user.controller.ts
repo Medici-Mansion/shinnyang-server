@@ -1,18 +1,57 @@
-import { Controller } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
+import { AccessGuard } from 'src/auth/guards/acess.guard';
+import { AuthUser } from 'src/auth/decorators/auth-user.decorator';
+import { Payload } from 'src/auth/dtos/jwt.dto';
+import {
+  ApiBearerAuth,
+  ApiExtraModels,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+  getSchemaPath,
+} from '@nestjs/swagger';
+import { UserResponse } from './dtos/user.dto';
+import { ChangeNicknameDTO } from './dtos/set-nickname.dto';
 
 @Controller('user')
+@ApiBearerAuth()
+@ApiExtraModels(UserResponse)
+@ApiTags('User API')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  //   @Post()
-  //   create(@Body() createUserDto: CreateUserDto) {
-  //     // 작업들
+  @ApiOperation({
+    summary: '내정보 조회',
+    description: '나의 계정정보를 조회한다.',
+  })
+  @ApiOkResponse({
+    description: '나의 정보',
+    schema: {
+      $ref: getSchemaPath(UserResponse),
+    },
+  })
+  @UseGuards(AccessGuard)
+  @Get('me')
+  async getMe(@AuthUser() { id }: Payload) {
+    return await this.userService.getMe(id);
+  }
 
-  //       return userdata: CreateUserDto
-  //   }
+  @ApiOperation({
+    summary: '닉네임 변경',
+    description: '나의 닉네임을 설정/변경한다.',
+  })
+  @ApiOkResponse({
+    description: '성공 여부',
+    type: Boolean,
+  })
+  @ApiBearerAuth()
+  @UseGuards(AccessGuard)
+  @Post('nickname')
+  async changeNickname(
+    @AuthUser() { id }: Payload,
+    @Body() changeNicknameDTO: ChangeNicknameDTO,
+  ) {
+    return await this.userService.changeNickname(id, changeNicknameDTO);
+  }
 }
-
-// 이메일 ,닉네임
-
-// 닉네임 updateUserDto
