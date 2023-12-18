@@ -31,7 +31,7 @@ export class LetterService {
   }
 
   async getLetterDetail(
-    letterId: number,
+    letterId: string,
   ): Promise<Response<GetLettersResponseDto>> {
     const letter = await this.lettersRepository.findOne({
       where: { id: letterId },
