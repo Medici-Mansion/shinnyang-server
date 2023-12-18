@@ -7,7 +7,7 @@ export class UserRepository extends Repository<User> {
     super(User, dataSource.manager);
   }
 
-  async updateAndReturning(userId: number, userLike: DeepPartial<User>) {
+  async updateAndReturning(userId: string, userLike: DeepPartial<User>) {
     return await this.update(userId, userLike);
   }
 }
