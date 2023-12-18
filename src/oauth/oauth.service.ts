@@ -1,6 +1,6 @@
 import { AuthService } from './../auth/auth.service';
 import { UserService } from './../users/user.service';
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import axios from 'axios';
 import { GoogleAuthResponse, GoogleUserInfo } from './dtos/google.dto';
 import { URL } from 'url';
@@ -73,6 +73,7 @@ export class OauthService {
       await this.dataSource.getRepository(User).save(user);
       return new GoogleAuthResponse(token, user);
     } catch (err) {
+      new Logger().error(err.message);
       throw new BadRequestException('invalid request');
     }
   }
