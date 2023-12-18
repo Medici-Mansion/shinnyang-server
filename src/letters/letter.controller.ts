@@ -7,21 +7,23 @@ import {
   ApiTags,
   getSchemaPath,
 } from '@nestjs/swagger';
-import { LettersService } from './letters.service';
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
-import { GetLettersResponseDto } from './dtos/letters.dto';
+import { LetterService } from './letter.service';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { GetLettersResponseDto } from './dtos/letter.dto';
 import { Response } from 'src/common/interface';
 import {
   PostLetterRequestDto,
   PostLetterResponseDto,
-} from './dtos/create-letters.dto';
+} from './dtos/create-letter.dto';
 import { AccessGuard } from 'src/auth/guards/acess.guard';
+import { AuthUser } from '../auth/decorators/auth-user.decorator';
 
 @Controller('letters')
 @ApiTags('Letters API')
 @ApiExtraModels(GetLettersResponseDto, PostLetterResponseDto)
-export class LettersController {
-  constructor(private readonly lettersService: LettersService) {}
+export class LetterController {
+  constructor(private readonly lettersService: LetterService) {}
+
   @Get()
   @UseGuards(AccessGuard)
   @ApiBearerAuth()
@@ -35,11 +37,30 @@ export class LettersController {
       $ref: getSchemaPath(GetLettersResponseDto),
     },
   })
-  async getLetters(): Promise<Response<GetLettersResponseDto[]>> {
-    return this.lettersService.getLetters();
+  async getLetterList(
+    @AuthUser() { id },
+  ): Promise<Response<GetLettersResponseDto[]>> {
+    return this.lettersService.getLetterList(id);
   }
 
-  @Post()
+  @Get(':letterId')
+  @ApiOperation({
+    summary: '편지 상세 조회',
+    description: '편지의 상세 내용을 조회한다',
+  })
+  @ApiOkResponse({
+    description: '편지 상세 조회',
+    schema: {
+      $ref: getSchemaPath(GetLettersResponseDto),
+    },
+  })
+  async getLetterDetail(
+    @Param('letterId') letterId: number,
+  ): Promise<Response<GetLettersResponseDto>> {
+    return this.lettersService.getLetterDetail(letterId);
+  }
+
+  @Post('letter')
   @ApiOperation({
     summary: '편지 생성하기',
     description: '편지를 생성한다',
@@ -50,7 +71,7 @@ export class LettersController {
       $ref: getSchemaPath(PostLetterResponseDto),
     },
   })
-  async postLetters(@Body() postLetterRequestDto: PostLetterRequestDto) {
+  async postLetter(@Body() postLetterRequestDto: PostLetterRequestDto) {
     return this.lettersService.createLetter(postLetterRequestDto);
   }
 }

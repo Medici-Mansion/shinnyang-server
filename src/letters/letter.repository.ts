@@ -1,9 +1,9 @@
 import { DataSource, Repository } from 'typeorm';
 import { Letter } from './entities/letter.entity';
 import { InjectDataSource } from '@nestjs/typeorm';
-import { PostLetterRequestDto } from './dtos/create-letters.dto';
+import { PostLetterRequestDto } from './dtos/create-letter.dto';
 
-export class LettersRepository extends Repository<Letter> {
+export class LetterRepository extends Repository<Letter> {
   constructor(@InjectDataSource() dataSource: DataSource) {
     super(Letter, dataSource.createEntityManager());
   }
