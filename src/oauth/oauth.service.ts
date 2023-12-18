@@ -3,10 +3,11 @@ import { UserService } from './../users/user.service';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import axios from 'axios';
 import { GoogleAuthResponse, GoogleUserInfo } from './dtos/google.dto';
-
+import { URL } from 'url';
 import { InjectDataSource } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { User } from 'src/users/entities/user.entity';
+import { ServiceProvider } from './dtos/service-provider.dto';
 
 @Injectable()
 export class OauthService {
@@ -16,6 +17,28 @@ export class OauthService {
     @InjectDataSource()
     private readonly dataSource: DataSource,
   ) {}
+
+  getServiceRedirectUrl(service: ServiceProvider) {
+    switch (service) {
+      case ServiceProvider.GOOGLE:
+        const url = new URL(
+          'https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount',
+        );
+        url.searchParams.set('client_id', process.env.GOOGLE_AUTH_CLIENT_ID);
+        url.searchParams.set('redirect_uri', process.env.GOOGLE_REDIRECT_URL);
+        url.searchParams.set('response_type', 'code');
+        url.searchParams.set(
+          'scope',
+          'https://www.googleapis.com/auth/userinfo.email',
+        );
+        url.searchParams.set('access_type', 'offline');
+        return url;
+      default:
+        break;
+    }
+    throw new BadRequestException();
+  }
+
   async userFromGoogle(code: string) {
     const form = new FormData();
     form.append('client_id', process.env.GOOGLE_AUTH_CLIENT_ID);
