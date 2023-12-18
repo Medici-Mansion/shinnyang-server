@@ -31,4 +31,11 @@ export class User extends BaseEntity {
     default: UserStatus.ACTIVE,
   })
   status: UserStatus;
+
+  @Column({
+    name: 'refresh_token',
+    comment: '리프래시 토큰',
+    nullable: true,
+  })
+  refresh: string;
 }
