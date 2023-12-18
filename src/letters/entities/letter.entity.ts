@@ -2,7 +2,7 @@ import { BaseEntity } from 'src/common/entities/base.entity';
 import { Column, Entity } from 'typeorm';
 
 @Entity({ name: 'letters' })
-export class Letters extends BaseEntity {
+export class Letter extends BaseEntity {
   @Column({
     name: 'receiver_id',
     nullable: true,
