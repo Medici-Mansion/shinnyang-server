@@ -61,10 +61,10 @@ export class UserService {
    *
    * @issue SNP-64
    * @author raymondanything
-   * @param {number} id
+   * @param {string} id
    * @returns {Promise<UserResponse>} UserResponse
    */
-  async getMe(id: number): Promise<UserResponse> {
+  async getMe(id: string): Promise<UserResponse> {
     const user = await this.connection
       .getRepository(User)
       .findOne({ where: { id } });
@@ -82,7 +82,7 @@ export class UserService {
    * @returns {Promise<boolean>}
    */
   async changeNickname(
-    userId: number,
+    userId: string,
     changeNicknameDTO: ChangeNicknameDTO,
   ): Promise<boolean> {
     try {

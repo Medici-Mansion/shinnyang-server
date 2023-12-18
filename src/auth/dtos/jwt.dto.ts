@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString } from 'class-validator';
+import { IsString, IsUUID } from 'class-validator';
 
 export class JWT {
   @ApiProperty({ description: '엑세스 토큰' })
@@ -18,6 +18,6 @@ export class JWT {
 
 export class Payload {
   @ApiProperty({ description: 'Guard를 통과한 후 사용자 아이디' })
-  @IsString()
-  id: number;
+  @IsUUID('all')
+  id: string;
 }
