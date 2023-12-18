@@ -1,11 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsNumber, IsOptional, IsString, IsUUID } from 'class-validator';
 import { Letter } from '../entities/letter.entity';
 
 export class LetterDto {
   @ApiProperty({ description: '아이디' })
-  @IsNumber()
-  id: number;
+  @IsUUID('all')
+  id: string;
 
   @ApiProperty({ description: '받는 사용자 아이디', default: null })
   @IsOptional()

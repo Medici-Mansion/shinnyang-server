@@ -1,5 +1,5 @@
-import { BaseEntity } from 'src/common/entities/base.entity';
 import { Entity, Column } from 'typeorm';
+import { BaseEntity } from 'src/common/entities/base.entity';
 
 enum UserStatus {
   ACTIVE = 'active',
@@ -21,7 +21,7 @@ export class User extends BaseEntity {
     nullable: true,
     comment: '사용자 닉네임',
   })
-  nickname: string;
+  nickname: string | null;
 
   @Column({
     name: 'status',
@@ -32,10 +32,6 @@ export class User extends BaseEntity {
   })
   status: UserStatus;
 
-  @Column({
-    name: 'refresh_token',
-    comment: '리프래시 토큰',
-    nullable: true,
-  })
-  refresh: string;
+  @Column({ name: 'refresh_token', nullable: true, comment: '리프레시 토큰' })
+  refresh: string | null;
 }
