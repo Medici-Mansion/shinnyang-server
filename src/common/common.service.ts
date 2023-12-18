@@ -1,26 +1,19 @@
 import { Injectable } from '@nestjs/common';
-import { CreateCommonDto } from './dto/create-common.dto';
-import { UpdateCommonDto } from './dto/update-common.dto';
+import { InjectDataSource } from '@nestjs/typeorm';
+import { DataSource, IsNull, Not } from 'typeorm';
+import { Cats } from './entities/cats.entity';
+import { CatDTO } from './dto/cat.dto';
 
 @Injectable()
 export class CommonService {
-  create(createCommonDto: CreateCommonDto) {
-    return 'This action adds a new common';
-  }
+  constructor(@InjectDataSource() private readonly dataSource: DataSource) {}
 
-  findAll() {
-    return `This action returns all common`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} common`;
-  }
-
-  update(id: number, updateCommonDto: UpdateCommonDto) {
-    return `This action updates a #${id} common`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} common`;
+  async findAllCats() {
+    const cats = await this.dataSource.getRepository(Cats).find({
+      where: {
+        image: Not(IsNull()),
+      },
+    });
+    return cats.map((cat) => new CatDTO(cat));
   }
 }
