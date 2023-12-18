@@ -1,4 +1,4 @@
-import { Controller, Get, Query, Res } from '@nestjs/common';
+import { Controller, Get, Param, Query, Res } from '@nestjs/common';
 import { OauthService } from './oauth.service';
 import { Response } from 'express';
 import { URL } from 'url';
@@ -11,6 +11,8 @@ import {
 import { GoogleAuthResponse } from './dtos/google.dto';
 import { UserResponse } from 'src/users/dtos/user.dto';
 import { JWT } from 'src/auth/dtos/jwt.dto';
+import { ServiceProvider } from './dtos/service-provider.dto';
+import { ParseExplicitEnumPipe } from 'src/common/pipes/eum.pipe';
 
 @Controller('oauth')
 @ApiExtraModels(GoogleAuthResponse, UserResponse, JWT)
@@ -40,8 +42,15 @@ export class OauthController {
       $ref: getSchemaPath(GoogleAuthResponse),
     },
   })
-  @Get('google/user')
-  async getUserFromGoogle(@Query('code') code: string) {
-    return await this.oauthService.userFromGoogle(code);
+  @Get(':serviceName/user')
+  async getUserFromServiceProvider(
+    @Param('serviceName', new ParseExplicitEnumPipe(ServiceProvider))
+    service: string,
+    @Query('code') code: string,
+  ) {
+    // const user = await this.oauthService.userFromGoogle(code);
+    // return user;
+    console.log(service, '<<service');
+    return true;
   }
 }
