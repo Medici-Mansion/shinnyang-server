@@ -22,16 +22,3 @@ export class GoogleUserInfo {
   @IsString()
   picture: string;
 }
-
-export class GoogleAuthResponse {
-  @ApiProperty({ type: () => JWT })
-  token: JWT;
-
-  @ApiProperty({ type: () => UserResponse })
-  user: UserResponse;
-
-  constructor(token: JWT, user: User) {
-    this.token = token;
-    this.user = new UserResponse(user);
-  }
-}

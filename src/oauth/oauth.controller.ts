@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Query, Res } from '@nestjs/common';
+import { Controller, Get, Param, Post, Query, Res } from '@nestjs/common';
 import { OauthService } from './oauth.service';
 import { Response } from 'express';
 import {
@@ -7,14 +7,13 @@ import {
   ApiTags,
   getSchemaPath,
 } from '@nestjs/swagger';
-import { GoogleAuthResponse } from './dtos/google.dto';
 import { UserResponse } from 'src/users/dtos/user.dto';
 import { JWT } from 'src/auth/dtos/jwt.dto';
 import { ServiceProvider } from './dtos/service-provider.dto';
 import { ParseExplicitEnumPipe } from 'src/common/pipes/eum.pipe';
 
 @Controller('oauth')
-@ApiExtraModels(GoogleAuthResponse, UserResponse, JWT)
+@ApiExtraModels(UserResponse, JWT)
 @ApiTags('Oauth API')
 export class OauthController {
   constructor(private readonly oauthService: OauthService) {}
@@ -32,10 +31,10 @@ export class OauthController {
   @ApiOkResponse({
     description: '소셜 로그인 유저 및 토큰 정보',
     schema: {
-      $ref: getSchemaPath(GoogleAuthResponse),
+      $ref: getSchemaPath(JWT),
     },
   })
-  @Get(':serviceName/user')
+  @Post(':serviceName/user')
   async getUserFromServiceProvider(
     @Param('serviceName', new ParseExplicitEnumPipe(ServiceProvider))
     serviceName: ServiceProvider,
