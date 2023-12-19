@@ -1,6 +1,5 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { AppController } from './app.controller';
 import { LoggerMiddleware } from './middlewares/logger.middleware';
 import { DatabaseModule } from './database/database.module';
 import { UserModule } from './users/user.module';
@@ -8,6 +7,7 @@ import { AuthModule } from './auth/auth.module';
 import { OauthModule } from './oauth/oauth.module';
 import { CommonModule } from './common/common.module';
 import Joi from '@hapi/joi';
+import { LetterModule } from './letters/letter.module';
 
 @Module({
   imports: [
@@ -27,15 +27,13 @@ import Joi from '@hapi/joi';
         PORT: Joi.string().required(),
       }),
     }),
-    // 아직 어떤 db를 쓸지 정하지 않았음
     DatabaseModule,
     UserModule,
     AuthModule,
     OauthModule,
     CommonModule,
+    LetterModule,
   ],
-  controllers: [AppController],
-  providers: [],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

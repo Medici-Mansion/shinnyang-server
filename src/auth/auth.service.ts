@@ -58,7 +58,7 @@ export class AuthService {
     }
   }
 
-  sign(id: number) {
+  sign(id: string) {
     const payload: Payload = {
       id,
     };
