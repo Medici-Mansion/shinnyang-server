@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Query, Res } from '@nestjs/common';
+import { Controller, Get, Param, Post, Query, Res } from '@nestjs/common';
 import { OauthService } from './oauth.service';
 import { Response } from 'express';
 import {
@@ -35,13 +35,13 @@ export class OauthController {
       $ref: getSchemaPath(GoogleAuthResponse),
     },
   })
-  @Get(':serviceName/user')
+  @Post(':serviceName/user')
   async getUserFromServiceProvider(
     @Param('serviceName', new ParseExplicitEnumPipe(ServiceProvider))
     serviceName: ServiceProvider,
     @Query('code') code: string,
     // @Query('state') state: string,
-  ) {
+  ): Promise<JWT> {
     switch (serviceName) {
       case ServiceProvider.GOOGLE:
         return await this.oauthService.userFromGoogle(code);
