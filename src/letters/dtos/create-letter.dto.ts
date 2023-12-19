@@ -23,7 +23,7 @@ export class PostLetterRequestDto {
 }
 
 export class PostLetterResponseDto extends PickType(LetterDto, ['id']) {
-  constructor(id: number) {
+  constructor(id: string) {
     super();
     this.id = id;
   }
