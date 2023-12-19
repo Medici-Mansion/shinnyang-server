@@ -4,7 +4,7 @@ import { AppModule } from './app.module';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import helmet from 'helmet';
 import { EmojiLogger } from './common/emoji.logger';
-import { HttpExceptionFilter } from './common/exceiption-filter/http-exceiption.filter';
+import { HttpExceptionFilter } from './common/exception-filter/http-exceiption.filter';
 async function bootstrap() {
   const PORT = process.env.PORT || 3000;
   const app = await NestFactory.create(AppModule, {

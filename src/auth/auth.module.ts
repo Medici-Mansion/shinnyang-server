@@ -4,7 +4,7 @@ import { AuthRepository } from './auth.repository';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthController } from './auth.controller';
 import { APP_FILTER } from '@nestjs/core';
-import { TransactionExceptionFilter } from 'src/common/exceiption-filter/transaction-exception.filter';
+import { TransactionExceptionFilter } from 'src/common/exception-filter/transaction-exception.filter';
 @Global()
 @Module({
   imports: [JwtModule.register({})],

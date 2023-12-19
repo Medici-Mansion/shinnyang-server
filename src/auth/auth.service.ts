@@ -4,7 +4,7 @@ import { JWT, Payload } from './dtos/jwt.dto';
 import { InjectDataSource } from '@nestjs/typeorm';
 import { DataSource, QueryFailedError } from 'typeorm';
 import { User } from 'src/users/entities/user.entity';
-import { TransactionExceptionFilter } from 'src/common/exceiption-filter/transaction-exception.filter';
+import { TransactionExceptionFilter } from 'src/common/exception-filter/transaction-exception.filter';
 
 @Injectable()
 export class AuthService {
