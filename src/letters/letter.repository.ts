@@ -10,4 +10,10 @@ export class LetterRepository extends Repository<Letter> {
   async createLetter(letter: Letter) {
     return this.save(letter);
   }
+
+  async getLetter(letterId: string) {
+    return this.findOne({
+      where: { id: letterId },
+    });
+  }
 }

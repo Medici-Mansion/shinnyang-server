@@ -17,17 +17,14 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { GetLettersResponseDto } from './dtos/letter.response.dto';
+import { LetterDetailDto } from './dtos/letter.response.dto';
 import { Response } from 'src/common/interface';
-import {
-  PostLetterRequestDto,
-  PostLetterResponseDto,
-} from './dtos/letter.request.dto';
+import { CreateLetterDto } from './dtos/letter.request.dto';
 import { AccessGuard } from 'src/auth/guards/acess.guard';
 
 @Controller('letters')
 @ApiTags('Letters API')
-@ApiExtraModels(GetLettersResponseDto, PostLetterResponseDto)
+@ApiExtraModels(LetterDetailDto, LetterDetailDto)
 @ApiBearerAuth()
 export class LetterController {
   constructor(private readonly lettersService: LetterService) {}
@@ -39,13 +36,13 @@ export class LetterController {
   @ApiCreatedResponse({
     description: '편지 생성 완료',
     schema: {
-      $ref: getSchemaPath(PostLetterResponseDto),
+      $ref: getSchemaPath(LetterDetailDto),
     },
   })
   @Post()
   @UseGuards(AccessGuard)
-  async postLetter(@Body() postLetterRequestDto: PostLetterRequestDto) {
-    return this.lettersService.createLetter(postLetterRequestDto);
+  async postLetter(@Body() createLetterDto: CreateLetterDto) {
+    return this.lettersService.createLetter(createLetterDto);
   }
 
   @ApiOperation({
@@ -55,13 +52,13 @@ export class LetterController {
   @ApiOkResponse({
     description: '편지 상세 조회',
     schema: {
-      $ref: getSchemaPath(GetLettersResponseDto),
+      $ref: getSchemaPath(LetterDetailDto),
     },
   })
   @Get(':letterId')
   async getLetterDetail(
     @Param('letterId', ParseUUIDPipe) letterId: string,
-  ): Promise<Response<GetLettersResponseDto>> {
+  ): Promise<Response<LetterDetailDto>> {
     return this.lettersService.getLetterDetail(letterId);
   }
 }

@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsDate, IsOptional, IsString, IsUUID } from 'class-validator';
 import { Letter } from '../../entities/letter.entity';
 
-export class LetterResponseDto {
+export class LetterDetailDto {
   @ApiProperty({ description: '편지 아이디' })
   @IsUUID('all')
   id: string;
@@ -38,11 +38,8 @@ export class LetterResponseDto {
   @IsOptional()
   @IsDate()
   deletedAt: Date | null;
-}
 
-export class GetLettersResponseDto extends LetterResponseDto {
   constructor(lettersEntity: Letter) {
-    super();
     this.id = lettersEntity.id;
     this.receiverName = lettersEntity.receiverName;
     this.content = lettersEntity.content;

@@ -1,9 +1,8 @@
-import { ApiProperty, PickType } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsUUID } from 'class-validator';
-import { LetterResponseDto } from './letter.response.dto';
 import { Letter } from '../../entities/letter.entity';
 
-export class PostLetterRequestDto {
+export class CreateLetterDto {
   @ApiProperty({ description: '보내는 사용자 아이디' })
   @IsUUID()
   senderId: string;
@@ -24,18 +23,11 @@ export class PostLetterRequestDto {
   content: string;
 }
 
-export function toEntity(postLetterRequestDto: PostLetterRequestDto): Letter {
+export function toEntity(postLetterRequestDto: CreateLetterDto): Letter {
   const letter = new Letter();
   letter.senderId = postLetterRequestDto.senderId;
   letter.senderNickname = postLetterRequestDto.senderNickname;
   letter.receiverName = postLetterRequestDto.receiverName;
   letter.content = postLetterRequestDto.content;
   return letter;
-}
-
-export class PostLetterResponseDto extends PickType(LetterResponseDto, ['id']) {
-  constructor(id: string) {
-    super();
-    this.id = id;
-  }
 }
