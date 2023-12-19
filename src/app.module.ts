@@ -6,7 +6,6 @@ import { UserModule } from './users/user.module';
 import { AuthModule } from './auth/auth.module';
 import { OauthModule } from './oauth/oauth.module';
 import { CommonModule } from './common/common.module';
-import { AnswerModule } from './answer/answer.module';
 import Joi from '@hapi/joi';
 import { LetterModule } from './letters/letter.module';
 
@@ -34,7 +33,6 @@ import { LetterModule } from './letters/letter.module';
     OauthModule,
     CommonModule,
     LetterModule,
-    AnswerModule,
   ],
 })
 export class AppModule implements NestModule {

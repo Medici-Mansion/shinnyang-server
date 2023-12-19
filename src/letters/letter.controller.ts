@@ -30,8 +30,7 @@ import { AccessGuard } from 'src/auth/guards/acess.guard';
 @ApiExtraModels(GetLettersResponseDto, PostLetterResponseDto)
 @ApiBearerAuth()
 export class LetterController {
-  constructor(private readonly lettersService: LetterService) {
-  }
+  constructor(private readonly lettersService: LetterService) {}
 
   @ApiOperation({
     summary: '편지 생성하기',

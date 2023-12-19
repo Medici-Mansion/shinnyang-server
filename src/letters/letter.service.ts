@@ -11,8 +11,7 @@ import {
 
 @Injectable()
 export class LetterService {
-  constructor(private readonly lettersRepository: LetterRepository) {
-  }
+  constructor(private readonly lettersRepository: LetterRepository) {}
 
   /**
    * 편지를 생성한다.
