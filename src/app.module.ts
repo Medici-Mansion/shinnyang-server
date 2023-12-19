@@ -8,6 +8,7 @@ import { OauthModule } from './oauth/oauth.module';
 import { CommonModule } from './common/common.module';
 import Joi from '@hapi/joi';
 import { LetterModule } from './letters/letter.module';
+import { AnswerModule } from './answer/answer.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { LetterModule } from './letters/letter.module';
     OauthModule,
     CommonModule,
     LetterModule,
+    AnswerModule,
   ],
 })
 export class AppModule implements NestModule {

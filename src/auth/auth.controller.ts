@@ -52,6 +52,8 @@ export class AuthController {
   })
   @Post('refresh')
   async refreshToken(@Body('refresh') refreshToken: string): Promise<JWT> {
+    console.log('1111');
+    console.log(refreshToken);
     return await this.authService.refreshToken(refreshToken);
   }
 }
