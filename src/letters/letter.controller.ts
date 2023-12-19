@@ -21,6 +21,7 @@ import { LetterDetailDto } from './dtos/letter.response.dto';
 import { Response } from 'src/common/interface';
 import { CreateLetterDto } from './dtos/letter.request.dto';
 import { AccessGuard } from 'src/auth/guards/acess.guard';
+import { AuthUser } from '../auth/decorators/auth-user.decorator';
 
 @Controller('letters')
 @ApiTags('Letters API')
@@ -41,8 +42,11 @@ export class LetterController {
   })
   @Post()
   @UseGuards(AccessGuard)
-  async postLetter(@Body() createLetterDto: CreateLetterDto) {
-    return this.lettersService.createLetter(createLetterDto);
+  async postLetter(
+    @AuthUser() { id },
+    @Body() createLetterDto: CreateLetterDto,
+  ) {
+    return this.lettersService.createLetter(id, createLetterDto);
   }
 
   @ApiOperation({

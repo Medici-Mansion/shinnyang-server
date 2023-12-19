@@ -1,19 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsUUID } from 'class-validator';
+import { IsString } from 'class-validator';
 import { Letter } from '../../entities/letter.entity';
 
 export class CreateLetterDto {
-  @ApiProperty({ description: '보내는 사용자 아이디' })
-  @IsUUID()
-  senderId: string;
-
-  @ApiProperty({ description: '보내는 사용자 닉네임' })
+  @ApiProperty({ description: '보내는 사용자 닉네임', default: '홍길동' })
   @IsString()
   senderNickname: string;
 
   @ApiProperty({ description: '받는 사용자 이름', default: '덕배' })
   @IsString()
-  receiverName: string;
+  receiverNickname: string;
 
   @ApiProperty({
     description: '보낼 편지의 내용',
@@ -23,11 +19,14 @@ export class CreateLetterDto {
   content: string;
 }
 
-export function toEntity(postLetterRequestDto: CreateLetterDto): Letter {
+export function toEntity(
+  userId: string,
+  createLetterDto: CreateLetterDto,
+): Letter {
   const letter = new Letter();
-  letter.senderId = postLetterRequestDto.senderId;
-  letter.senderNickname = postLetterRequestDto.senderNickname;
-  letter.receiverName = postLetterRequestDto.receiverName;
-  letter.content = postLetterRequestDto.content;
+  letter.senderId = userId;
+  letter.senderNickname = createLetterDto.senderNickname;
+  letter.receiverNickname = createLetterDto.receiverNickname;
+  letter.content = createLetterDto.content;
   return letter;
 }

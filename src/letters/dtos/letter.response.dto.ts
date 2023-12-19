@@ -3,11 +3,11 @@ import { IsDate, IsOptional, IsString, IsUUID } from 'class-validator';
 import { Letter } from '../../entities/letter.entity';
 
 export class LetterDetailDto {
-  @ApiProperty({ description: '편지 아이디' })
+  @ApiProperty({ description: '편지 아이디', default: '{letterId}' })
   @IsUUID('all')
   id: string;
 
-  @ApiProperty({ description: '보낸 사용자 아이디', default: '1' })
+  @ApiProperty({ description: '보낸 사용자 아이디', default: '{senderId}' })
   @IsUUID('all')
   senderId: string;
 
@@ -17,7 +17,7 @@ export class LetterDetailDto {
 
   @ApiProperty({ description: '받는 사용자 이름', default: '덕배' })
   @IsString()
-  receiverName: string;
+  receiverNickname: string;
 
   @ApiProperty({
     description: '내용',
@@ -39,14 +39,14 @@ export class LetterDetailDto {
   @IsDate()
   deletedAt: Date | null;
 
-  constructor(lettersEntity: Letter) {
-    this.id = lettersEntity.id;
-    this.receiverName = lettersEntity.receiverName;
-    this.content = lettersEntity.content;
-    this.senderId = lettersEntity.senderId;
-    this.senderNickname = lettersEntity.senderNickname;
-    this.createdAt = lettersEntity.createdAt;
-    this.updatedAt = lettersEntity.updatedAt;
-    this.deletedAt = lettersEntity.deletedAt;
+  constructor(letter: Letter) {
+    this.id = letter.id;
+    this.receiverNickname = letter.receiverNickname;
+    this.content = letter.content;
+    this.senderId = letter.senderId;
+    this.senderNickname = letter.senderNickname;
+    this.createdAt = letter.createdAt;
+    this.updatedAt = letter.updatedAt;
+    this.deletedAt = letter.deletedAt;
   }
 }

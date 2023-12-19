@@ -16,12 +16,14 @@ export class LetterService {
    * @link https://www.notion.so/raymondanything/SNP-39-26f72c15dd354ee9b870899c3be0bc40?pvs=4
    * @author raymondanything
    * @returns {Promise<Response <LetterDetailDto>>} PostLetterResponseDto
+   * @param userId
    * @param createLetterDto
    */
   async createLetter(
+    userId: string,
     createLetterDto: CreateLetterDto,
   ): Promise<Response<LetterDetailDto>> {
-    const letter = toEntity(createLetterDto);
+    const letter = toEntity(userId, createLetterDto);
     const newLetter = await this.lettersRepository.createLetter(letter);
     return createResponse(new LetterDetailDto(newLetter));
   }
