@@ -1,9 +1,10 @@
 import { JwtService, JwtVerifyOptions } from '@nestjs/jwt';
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, UseFilters } from '@nestjs/common';
 import { JWT, Payload } from './dtos/jwt.dto';
 import { InjectDataSource } from '@nestjs/typeorm';
-import { DataSource } from 'typeorm';
+import { DataSource, QueryFailedError } from 'typeorm';
 import { User } from 'src/users/entities/user.entity';
+import { TransactionExceptionFilter } from 'src/common/exception-filter/transaction-exception.filter';
 
 @Injectable()
 export class AuthService {
@@ -12,6 +13,7 @@ export class AuthService {
     @InjectDataSource() private readonly dataSource: DataSource,
   ) {}
 
+  @UseFilters(TransactionExceptionFilter)
   async refreshToken(refresh: string): Promise<JWT> {
     this.verify(refresh, {
       secret: process.env.SALT,
@@ -22,9 +24,12 @@ export class AuthService {
     await queryRunner.startTransaction();
 
     try {
-      const user = await this.dataSource.manager.findOne(User, {
-        where: { refresh },
-      });
+      // const user = await this.dataSource.manager.findOne(User, {
+      //   where: { refresh },
+      // });
+
+      const user = await this.dataSource.query('SELECT * FROM non_table'); // 쿼리 에러를 일부러 내기위한 코드
+
       if (!user) {
         throw new UnauthorizedException();
       }
@@ -38,8 +43,16 @@ export class AuthService {
       await queryRunner.commitTransaction();
       return tokens;
     } catch (err) {
-      await queryRunner.rollbackTransaction();
-      throw new Error('트랜잭션 에러 발생');
+      if (err instanceof QueryFailedError) {
+        await queryRunner.rollbackTransaction();
+        console.log('트랜잭션 에러 발생:', err.message);
+        throw err;
+      } else {
+        await queryRunner.rollbackTransaction();
+        throw err;
+      }
+      // await queryRunner.rollbackTransaction();
+      // throw new Error('트랜잭션 에러 발생');
     } finally {
       await queryRunner.release();
     }
