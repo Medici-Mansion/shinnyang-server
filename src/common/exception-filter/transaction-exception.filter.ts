@@ -5,6 +5,7 @@ import { Response } from 'express';
 @Catch(QueryFailedError)
 export class TransactionExceptionFilter implements ExceptionFilter {
   private readonly logger = new Logger(TransactionExceptionFilter.name);
+
   catch(exception: QueryFailedError, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();

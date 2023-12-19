@@ -26,21 +26,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
       path: request.url,
       error,
     };
-    //this.handleCustomException(exception);
     this.logger.error(JSON.stringify(errorObj, null, 2), request.url);
-
     response.status(status).json(errorObj);
   }
-
-  //   private handleCustomException(exception: HttpException) {
-  //     if (exception instanceof UnauthorizedException) {
-  //
-  //     }
-  //   }
-  // 이 부분을 switch를 사용해서 각 HttpException마다 다르게 핸들링할 수 있지 않을까?
-  // BadRequestException
-  // UnauthorizedException
-  // NotFoundException
-  // ForbiddenException
-  // ConflictException
 }
