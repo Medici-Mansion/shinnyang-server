@@ -15,6 +15,9 @@ export class CommonService {
       where: {
         image: Not(IsNull()),
       },
+      order: {
+        createdAt: 'ASC',
+      },
     });
     return cats.map((cat) => new CatDTO(cat));
   }
@@ -23,6 +26,9 @@ export class CommonService {
     const accessories = await this.dataSource.getRepository(Accessories).find({
       where: {
         fullImage: Not(IsNull()),
+      },
+      order: {
+        createdAt: 'ASC',
       },
     });
     return accessories.map((accessory) => new AccessoryDTO(accessory));
