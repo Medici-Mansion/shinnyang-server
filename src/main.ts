@@ -4,6 +4,8 @@ import { AppModule } from './app.module';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import helmet from 'helmet';
 import { EmojiLogger } from './common/emoji.logger';
+import { HttpExceptionFilter } from './common/exception-filter/http-exceiption.filter';
+import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
 async function bootstrap() {
   const PORT = process.env.PORT || 3000;
   const app = await NestFactory.create(AppModule, {
@@ -12,6 +14,8 @@ async function bootstrap() {
   app.enableCors();
   app.use(helmet());
 
+  app.useGlobalInterceptors(new LoggingInterceptor(new EmojiLogger()));
+  app.useGlobalFilters(new HttpExceptionFilter());
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,

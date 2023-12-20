@@ -5,7 +5,7 @@ metadata:
 
 spec:
   strategy:
-    type: Recreate
+    type: "RollingUpdate"
     # rollingUpdate:
     #   maxUnavailable: 1
     #   maxSurge: 1
@@ -23,6 +23,9 @@ spec:
         - name: catsnewyear
           image: sjc.vultrcr.com/medici/shin-server
           resources:
+            requests:
+              memory: "256Mi"
+              cpu: "500m"
             limits:
               memory: '512Mi'
               cpu: '1000m'
@@ -31,48 +34,12 @@ spec:
           envFrom:
             - secretRef:
                 name: catsnewyear-prod
-          # env:
-          #   - name: NODE_ENV
-          #     valueFrom:
-          #       secretKeyRef:
-          #         name: catsnewyear-prod
-          #         key: NODE_ENV
-          #         optional: false
-          #   - name: PORT
-          #     valueFrom:
-          #       secretKeyRef:
-          #         name: catsnewyear-prod
-          #         key: PORT
-          #         optional: false
-          #   - name: DB_HOST
-          #     valueFrom:
-          #       secretKeyRef:
-          #         name: catsnewyear-prod
-          #         key: DB_HOST
-          #         optional: false
-          #   - name: DB_PORT
-          #     valueFrom:
-          #       secretKeyRef:
-          #         name: catsnewyear-prod
-          #         key: DB_PORT
-          #         optional: false
-          #   - name: DB_USER
-          #     valueFrom:
-          #       secretKeyRef:
-          #         name: catsnewyear-prod
-          #         key: DB_USER
-          #         optional: false
-          #   - name: DB_PWD
-          #     valueFrom:
-          #       secretKeyRef:
-          #         name: catsnewyear-prod
-          #         key: DB_PWD
-          #         optional: false
-          #   - name: DB_NAME
-          #     valueFrom:
-          #       secretKeyRef:
-          #         name: catsnewyear-prod
-          #         key: DB_NAME
-          #         optional: false
+          volumeMounts:
+                  - name: tz-seoul
+                    mountPath: /etc/localtime
+      volumes:
+      - name: tz-seoul
+        hostPath:
+          path: /usr/share/zoneinfo/Asia/Seoul
       imagePullSecrets:
         - name: vultr-registry
