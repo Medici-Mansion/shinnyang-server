@@ -17,6 +17,10 @@ export class CreateLetterDto {
   })
   @IsString()
   content: string;
+
+  @ApiProperty( { description: '고양이 타입', default: 'umu' })
+  @IsString()
+  catType: string;
 }
 
 export function toEntity(
@@ -28,5 +32,6 @@ export function toEntity(
   letter.senderNickname = createLetterDto.senderNickname;
   letter.receiverNickname = createLetterDto.receiverNickname;
   letter.content = createLetterDto.content;
+  letter.catType = createLetterDto.catType;
   return letter;
 }

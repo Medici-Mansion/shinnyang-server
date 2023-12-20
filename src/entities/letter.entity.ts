@@ -26,4 +26,7 @@ export class Letter extends BaseEntity {
 
   @Column({ name: 'content', comment: '편지 내용', nullable: false })
   content: string;
+
+  @Column( { name: 'cat_type', comment: '고양이 타입', nullable: false })
+  catType: string;
 }
