@@ -1,6 +1,19 @@
-import { Body, Controller, Get, Param, ParseUUIDPipe, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseUUIDPipe,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { AnswerService } from './answer.service';
-import { ApiCreatedResponse, ApiOkResponse, ApiOperation, getSchemaPath } from '@nestjs/swagger';
+import {
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiOperation,
+  getSchemaPath,
+} from '@nestjs/swagger';
 import { AnswerDetailDto } from './dtos/answer.response.dto';
 import { CreateAnswerDto } from './dtos/answer.request.dto';
 import { AccessGuard } from '../auth/guards/acess.guard';
@@ -8,8 +21,7 @@ import { AuthUser } from '../auth/decorators/auth-user.decorator';
 
 @Controller('answers')
 export class AnswerController {
-  constructor(private readonly answerService: AnswerService) {
-  }
+  constructor(private readonly answerService: AnswerService) {}
 
   @ApiOperation({
     summary: '답장 생성하기',

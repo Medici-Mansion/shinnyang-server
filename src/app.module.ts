@@ -9,6 +9,7 @@ import { CommonModule } from './common/common.module';
 import Joi from '@hapi/joi';
 import { LetterModule } from './letters/letter.module';
 import { AppController } from './app.controller';
+import { AnswerModule } from './answers/answer.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { AppController } from './app.controller';
     OauthModule,
     CommonModule,
     LetterModule,
+    AnswerModule,
   ],
   controllers: [AppController],
   providers: [],

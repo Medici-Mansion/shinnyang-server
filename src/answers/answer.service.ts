@@ -7,8 +7,7 @@ import { RuntimeException } from '@nestjs/core/errors/exceptions';
 
 @Injectable()
 export class AnswerService {
-  constructor(private readonly answerRepository: AnswerRepository) {
-  }
+  constructor(private readonly answerRepository: AnswerRepository) {}
 
   async createAnswer(createAnswerDto: CreateAnswerDto) {
     const answer = toEntity(createAnswerDto);
@@ -26,8 +25,10 @@ export class AnswerService {
 
   async getAnswerList(id: string) {
     const findAnswerList = await this.answerRepository.getAnswerList(id);
-    return createResponse(findAnswerList.map(answer => {
-      new AnswerDetailDto(answer);
-    }));
+    return createResponse(
+      findAnswerList.map((answer) => {
+        new AnswerDetailDto(answer);
+      }),
+    );
   }
 }

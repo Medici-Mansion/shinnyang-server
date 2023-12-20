@@ -28,7 +28,7 @@ export class LetterDetailDto {
 
   @ApiProperty({
     description: '고양이 이름',
-    default: 'amu'
+    default: 'amu',
   })
   @IsString()
   catName: string;
