@@ -22,8 +22,8 @@ jobs:
         with:
           push: true
           tags: |
-            sjc.vultrcr.com/medici/shin-server:latest
-            sjc.vultrcr.com/medici/shin-server:${{ github.sha }}
+            sjc.vultrcr.com/medici/shin-server-dev:latest
+            sjc.vultrcr.com/medici/shin-server-dev:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
   deploy:
@@ -44,6 +44,6 @@ jobs:
         with:
           namespace: default
           manifests: |
-            k8s/deployment.yaml
+            k8s/deployment-dev.yaml
           images: |
             sjc.vultrcr.com/medici/shin-server:${{ github.sha }}

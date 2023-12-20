@@ -2,7 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: catsnewyear
-
+  labels:
+    env: production
 spec:
   strategy:
     type: Recreate
@@ -14,10 +15,12 @@ spec:
   selector:
     matchLabels:
       app: catsnewyear
+      env: production
   template:
     metadata:
       labels:
         app: catsnewyear
+        env: production
     spec:
       containers:
         - name: catsnewyear
