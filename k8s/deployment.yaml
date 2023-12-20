@@ -5,7 +5,7 @@ metadata:
 
 spec:
   strategy:
-    type: "RollingUpdate"
+    type: 'RollingUpdate'
     # rollingUpdate:
     #   maxUnavailable: 1
     #   maxSurge: 1
@@ -21,11 +21,11 @@ spec:
     spec:
       containers:
         - name: catsnewyear
-          image: sjc.vultrcr.com/medici/shin-server
+          image: ghcr.io/medici/catsnewyear-server:latest
           resources:
             requests:
-              memory: "256Mi"
-              cpu: "500m"
+              memory: '256Mi'
+              cpu: '500m'
             limits:
               memory: '512Mi'
               cpu: '1000m'
@@ -35,11 +35,11 @@ spec:
             - secretRef:
                 name: catsnewyear-prod
           volumeMounts:
-                  - name: tz-seoul
-                    mountPath: /etc/localtime
+            - name: tz-seoul
+              mountPath: /etc/localtime
       volumes:
-      - name: tz-seoul
-        hostPath:
-          path: /usr/share/zoneinfo/Asia/Seoul
+        - name: tz-seoul
+          hostPath:
+            path: /usr/share/zoneinfo/Asia/Seoul
       imagePullSecrets:
         - name: vultr-registry
