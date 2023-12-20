@@ -31,10 +31,9 @@ export class Answer extends BaseEntity {
   })
   receiverNickname: string;
 
-  @Column( {
+  @Column({
     name: 'cat_type',
     comment: '고양이 타입',
-    nullable: false
   })
   catType: string;
 
