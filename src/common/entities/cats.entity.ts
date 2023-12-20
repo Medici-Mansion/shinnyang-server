@@ -12,6 +12,6 @@ export class Cats extends BaseEntity {
   @Column({ name: 'image', comment: '이미지 경로', nullable: true })
   image: string;
 
-  @Column({ name: 'sub_image', comment: '이미지 경로', nullable: true })
+  @Column({ name: 'sub_image', comment: '보조 이미지 경로', nullable: true })
   subImage: string;
 }
