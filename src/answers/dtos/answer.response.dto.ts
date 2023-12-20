@@ -3,7 +3,7 @@ import { IsDate, IsOptional, IsString, IsUUID } from 'class-validator';
 import { Answer } from '../../entities/answer.entity';
 
 export class AnswerDetailDto {
-  @ApiProperty( {description: '답장 아이디', default: '{answerId}'})
+  @ApiProperty({ description: '답장 아이디', default: '{answerId}' })
   @IsUUID('all')
   id: string;
 
@@ -33,7 +33,7 @@ export class AnswerDetailDto {
 
   @ApiProperty({
     description: '고양이 이름',
-    default: 'amu'
+    default: 'amu',
   })
   @IsString()
   catName: string;
