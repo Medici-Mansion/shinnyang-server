@@ -9,7 +9,7 @@ export class PostUserRequestDto {
 }
 
 export class PostUserResponseDto extends PickType(UserDto, ['id']) {
-  constructor(id: number) {
+  constructor(id: string) {
     super();
     this.id = id;
   }
