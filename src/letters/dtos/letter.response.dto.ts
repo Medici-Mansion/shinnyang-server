@@ -27,11 +27,10 @@ export class LetterDetailDto {
   content: string;
 
   @ApiProperty({
-    description: '고양이 타입',
-    default: 'amu'
+    description: '고양이 타입 아이디',
   })
-  @IsString()
-  catType: string;
+  @IsUUID()
+  catTypeId: string;
 
   @ApiProperty({ description: '생성일자' })
   @IsDate()
@@ -52,7 +51,7 @@ export class LetterDetailDto {
     this.content = letter.content;
     this.senderId = letter.senderId;
     this.senderNickname = letter.senderNickname;
-    this.catType = letter.catType;
+    this.catTypeId = letter.catTypeId;
     this.createdAt = letter.createdAt;
     this.updatedAt = letter.updatedAt;
     this.deletedAt = letter.deletedAt;
