@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsUUID } from 'class-validator';
+import { IsString } from 'class-validator';
 import { Letter } from '../../entities/letter.entity';
 
 export class CreateLetterDto {
@@ -18,9 +18,9 @@ export class CreateLetterDto {
   @IsString()
   content: string;
 
-  @ApiProperty({ description: '고양이 타입 아이디' })
-  @IsUUID()
-  catTypeId: string;
+  @ApiProperty( { description: '고양이 이름', default: 'umu' })
+  @IsString()
+  catName: string;
 }
 
 export function toEntity(
@@ -32,6 +32,6 @@ export function toEntity(
   letter.senderNickname = createLetterDto.senderNickname;
   letter.receiverNickname = createLetterDto.receiverNickname;
   letter.content = createLetterDto.content;
-  letter.catTypeId = createLetterDto.catTypeId;
+  letter.catName = createLetterDto.catName;
   return letter;
 }

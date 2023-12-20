@@ -1,6 +1,5 @@
 import { BaseEntity } from 'src/common/entities/base.entity';
-import { Cats } from 'src/common/entities/cats.entity';
-import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
+import { Column, Entity } from 'typeorm';
 
 @Entity({ name: 'letters' })
 export class Letter extends BaseEntity {
@@ -21,23 +20,13 @@ export class Letter extends BaseEntity {
   @Column({
     name: 'receiver_nickname',
     comment: '편지 받는 사용자 닉네임',
+    nullable: false,
   })
   receiverNickname: string;
 
   @Column({ name: 'content', comment: '편지 내용', nullable: false })
   content: string;
 
-  @OneToOne(() => Cats, (cats) => cats.id, {
-    createForeignKeyConstraints: false,
-  })
-  @JoinColumn({ name: 'cat_type_id' })
-  catType: Cats;
-
-  @Column({
-    name: 'cat_type_id',
-    comment: '고양이 타입 아이디',
-    type: 'uuid',
-    nullable: true,
-  })
-  catTypeId: string;
+  @Column( { name: 'cat_name', comment: '고양이 이름', nullable: false })
+  catName: string;
 }

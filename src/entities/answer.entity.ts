@@ -40,4 +40,11 @@ export class Answer extends BaseEntity {
 
   @Column({ name: 'content', comment: '답장 내용', nullable: false })
   content: string;
+
+  @Column( {
+    name: 'cat_name',
+    comment: '고양이 이름',
+    nullable: false
+  })
+  catName: string;
 }
