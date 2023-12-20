@@ -24,11 +24,9 @@ export class AuthService {
     await queryRunner.startTransaction();
 
     try {
-      // const user = await this.dataSource.manager.findOne(User, {
-      //   where: { refresh },
-      // });
-
-      const user = await this.dataSource.query('SELECT * FROM non_table'); // 쿼리 에러를 일부러 내기위한 코드
+      const user = await this.dataSource.manager.findOne(User, {
+        where: { refresh },
+      });
 
       if (!user) {
         throw new UnauthorizedException();
@@ -51,8 +49,6 @@ export class AuthService {
         await queryRunner.rollbackTransaction();
         throw err;
       }
-      // await queryRunner.rollbackTransaction();
-      // throw new Error('트랜잭션 에러 발생');
     } finally {
       await queryRunner.release();
     }
