@@ -26,7 +26,6 @@ import { AuthUser } from '../auth/decorators/auth-user.decorator';
 @Controller('letters')
 @ApiTags('Letters API')
 @ApiExtraModels(LetterDetailDto, LetterDetailDto)
-@ApiBearerAuth()
 export class LetterController {
   constructor(private readonly lettersService: LetterService) {}
 
@@ -40,6 +39,7 @@ export class LetterController {
       $ref: getSchemaPath(LetterDetailDto),
     },
   })
+  @ApiBearerAuth()
   @Post()
   @UseGuards(AccessGuard)
   async postLetter(

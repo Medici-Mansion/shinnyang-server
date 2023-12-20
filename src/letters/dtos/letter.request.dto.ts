@@ -18,7 +18,7 @@ export class CreateLetterDto {
   @IsString()
   content: string;
 
-  @ApiProperty( { description: '고양이 이름', default: 'umu' })
+  @ApiProperty({ description: '고양이 이름', default: 'umu' })
   @IsString()
   catName: string;
 }
