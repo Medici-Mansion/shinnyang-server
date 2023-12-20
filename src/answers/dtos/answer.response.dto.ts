@@ -1,19 +1,24 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsDate, IsOptional, IsString, IsUUID } from 'class-validator';
-import { Letter } from '../../entities/letter.entity';
+import { Answer } from '../../entities/answer.entity';
 
-export class LetterDetailDto {
-  @ApiProperty({ description: '편지 아이디', default: '{letterId}' })
+export class AnswerDetailDto {
+  @ApiProperty( {description: '답장 아이디', default: '{answerId}'})
   @IsUUID('all')
   id: string;
 
   @ApiProperty({ description: '보낸 사용자 아이디', default: '{senderId}' })
   @IsUUID('all')
-  senderId: string;
+  @IsOptional()
+  senderId: string | null;
 
   @ApiProperty({ description: '보낸 사용자 닉네임', default: '홍길동' })
   @IsString()
   senderNickname: string;
+
+  @ApiProperty({ description: '받는 사용자 아이디', default: '{uuid}' })
+  @IsUUID('all')
+  receiverId: string;
 
   @ApiProperty({ description: '받는 사용자 이름', default: '덕배' })
   @IsString()
@@ -46,15 +51,16 @@ export class LetterDetailDto {
   @IsDate()
   deletedAt: Date | null;
 
-  constructor(letter: Letter) {
-    this.id = letter.id;
-    this.receiverNickname = letter.receiverNickname;
-    this.content = letter.content;
-    this.senderId = letter.senderId;
-    this.senderNickname = letter.senderNickname;
-    this.catName = letter.catName;
-    this.createdAt = letter.createdAt;
-    this.updatedAt = letter.updatedAt;
-    this.deletedAt = letter.deletedAt;
+  constructor(answer: Answer) {
+    this.id = answer.id;
+    this.senderId = answer.senderId;
+    this.senderNickname = answer.senderNickname;
+    this.receiverId = answer.receiverId;
+    this.receiverNickname = answer.receiverNickname;
+    this.content = answer.content;
+    this.catName = answer.catName;
+    this.createdAt = answer.createdAt;
+    this.updatedAt = answer.updatedAt;
+    this.deletedAt = answer.deletedAt;
   }
 }

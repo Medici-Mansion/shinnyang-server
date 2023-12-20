@@ -5,17 +5,28 @@ import { Column, Entity } from 'typeorm';
 export class Letter extends BaseEntity {
   @Column({
     name: 'sender_id',
-    comment: '보낸 사용자 아이디',
+    comment: '편지 쓰는 사용자 아이디',
     nullable: false,
   })
   senderId: string;
 
-  @Column({ name: 'sender_nickname', nullable: false })
+  @Column({
+    name: 'sender_nickname',
+    comment: '편지 쓰는 사용자 닉네임',
+    nullable: false,
+  })
   senderNickname: string;
 
-  @Column({ name: 'receiver_name', nullable: false })
-  receiverName: string;
+  @Column({
+    name: 'receiver_nickname',
+    comment: '편지 받는 사용자 닉네임',
+    nullable: false,
+  })
+  receiverNickname: string;
 
-  @Column({ name: 'content', nullable: false })
+  @Column({ name: 'content', comment: '편지 내용', nullable: false })
   content: string;
+
+  @Column( { name: 'cat_name', comment: '고양이 이름', nullable: false })
+  catName: string;
 }
