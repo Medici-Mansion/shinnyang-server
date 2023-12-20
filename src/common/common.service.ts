@@ -3,6 +3,8 @@ import { InjectDataSource } from '@nestjs/typeorm';
 import { DataSource, IsNull, Not } from 'typeorm';
 import { Cats } from './entities/cats.entity';
 import { CatDTO } from './dto/cat.dto';
+import { Accessories } from './entities/accessories.entity';
+import { AccessoryDTO } from './dto/accessory.dto';
 
 @Injectable()
 export class CommonService {
@@ -15,5 +17,14 @@ export class CommonService {
       },
     });
     return cats.map((cat) => new CatDTO(cat));
+  }
+
+  async findAllAccessories() {
+    const accessories = await this.dataSource.getRepository(Accessories).find({
+      where: {
+        fullImage: Not(IsNull()),
+      },
+    });
+    return accessories.map((accessory) => new AccessoryDTO(accessory));
   }
 }

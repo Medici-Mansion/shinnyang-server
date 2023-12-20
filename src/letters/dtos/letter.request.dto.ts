@@ -18,7 +18,7 @@ export class CreateLetterDto {
   @IsString()
   content: string;
 
-  @ApiProperty({ description: '고양이 타입' })
+  @ApiProperty({ description: '고양이 타입 아이디' })
   @IsUUID()
   catTypeId: string;
 }
