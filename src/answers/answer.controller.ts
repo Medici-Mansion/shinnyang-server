@@ -9,16 +9,22 @@ import {
 } from '@nestjs/common';
 import { AnswerService } from './answer.service';
 import {
+  ApiBearerAuth,
   ApiCreatedResponse,
+  ApiExtraModels,
   ApiOkResponse,
   ApiOperation,
+  ApiTags,
   getSchemaPath,
 } from '@nestjs/swagger';
 import { AnswerDetailDto } from './dtos/answer.response.dto';
 import { CreateAnswerDto } from './dtos/answer.request.dto';
 import { AccessGuard } from '../auth/guards/acess.guard';
 import { AuthUser } from '../auth/decorators/auth-user.decorator';
+import { LetterDetailDto } from '../letters/dtos/letter.response.dto';
 
+@ApiTags('Answers API')
+@ApiExtraModels(LetterDetailDto, LetterDetailDto)
 @Controller('answers')
 export class AnswerController {
   constructor(private readonly answerService: AnswerService) {}
@@ -48,6 +54,7 @@ export class AnswerController {
       $ref: getSchemaPath(AnswerDetailDto),
     },
   })
+  @ApiBearerAuth()
   @Get(':answerId')
   @UseGuards(AccessGuard)
   async getAnswerDetail(
@@ -67,6 +74,7 @@ export class AnswerController {
       $ref: getSchemaPath(AnswerDetailDto),
     },
   })
+  @ApiBearerAuth()
   @Get()
   @UseGuards(AccessGuard)
   async getAnswerList(@AuthUser() { id }) {
