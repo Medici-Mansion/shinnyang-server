@@ -2,7 +2,7 @@ import { AuthService } from './../auth/auth.service';
 import { UserService } from './../users/user.service';
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import axios from 'axios';
-import { GoogleAuthResponse, GoogleUserInfo } from './dtos/google.dto';
+import { GoogleUserInfo } from './dtos/google.dto';
 import { URL } from 'url';
 import { InjectDataSource } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
@@ -12,6 +12,7 @@ import { JWT } from 'src/auth/dtos/jwt.dto';
 
 @Injectable()
 export class OauthService {
+  private readonly logger = new Logger(OauthService.name);
   constructor(
     private readonly userService: UserService,
     private readonly authService: AuthService,
@@ -74,8 +75,8 @@ export class OauthService {
       await this.dataSource.getRepository(User).save(user);
       return new JWT(token);
     } catch (err) {
-      new Logger().error(err.message);
-      throw new BadRequestException('invalid request');
+      this.logger.error(err.message);
+      throw new BadRequestException('invalid request: ' + err?.message || '');
     }
   }
 }
