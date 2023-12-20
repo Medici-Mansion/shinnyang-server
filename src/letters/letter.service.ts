@@ -1,13 +1,9 @@
 import { LetterRepository } from './letter.repository';
 import { Injectable } from '@nestjs/common';
 import { createResponse } from 'src/utils/response.utils';
-import { GetLettersResponseDto } from './dtos/letter.response.dto';
+import { LetterDetailDto } from './dtos/letter.response.dto';
 import { Response } from 'src/common/interface';
-import {
-  PostLetterRequestDto,
-  PostLetterResponseDto,
-  toEntity,
-} from './dtos/letter.request.dto';
+import { CreateLetterDto, toEntity } from './dtos/letter.request.dto';
 
 @Injectable()
 export class LetterService {
@@ -19,23 +15,21 @@ export class LetterService {
    * @issue SNP-39
    * @link https://www.notion.so/raymondanything/SNP-39-26f72c15dd354ee9b870899c3be0bc40?pvs=4
    * @author raymondanything
-   * @param postLetterRequestDto
-   * @returns {Promise<Response <PostLetterResponseDto>>} PostLetterResponseDto
+   * @returns {Promise<Response <LetterDetailDto>>} PostLetterResponseDto
+   * @param userId
+   * @param createLetterDto
    */
   async createLetter(
-    postLetterRequestDto: PostLetterRequestDto,
-  ): Promise<Response<PostLetterResponseDto>> {
-    const letter = toEntity(postLetterRequestDto);
+    userId: string,
+    createLetterDto: CreateLetterDto,
+  ): Promise<Response<LetterDetailDto>> {
+    const letter = toEntity(userId, createLetterDto);
     const newLetter = await this.lettersRepository.createLetter(letter);
-    return createResponse(new PostLetterResponseDto(newLetter['id']));
+    return createResponse(new LetterDetailDto(newLetter));
   }
 
-  async getLetterDetail(
-    letterId: string,
-  ): Promise<Response<GetLettersResponseDto>> {
-    const letter = await this.lettersRepository.findOne({
-      where: { id: letterId },
-    });
-    return createResponse(new GetLettersResponseDto(letter));
+  async getLetterDetail(letterId: string): Promise<Response<LetterDetailDto>> {
+    const findLetter = await this.lettersRepository.getLetter(letterId);
+    return createResponse(new LetterDetailDto(findLetter));
   }
 }
