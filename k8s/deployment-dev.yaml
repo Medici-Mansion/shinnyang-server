@@ -11,7 +11,7 @@ spec:
     #   maxUnavailable: 1
     #   maxSurge: 1
   minReadySeconds: 5
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: catsnewyear-dev
@@ -21,6 +21,10 @@ spec:
       labels:
         app: catsnewyear-dev
         env: development
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/path: /metrics
+        prometheus.io/port: '3000'
     spec:
       containers:
         - name: catsnewyear
