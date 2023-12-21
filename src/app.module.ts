@@ -10,9 +10,10 @@ import Joi from '@hapi/joi';
 import { LetterModule } from './letters/letter.module';
 import { AppController } from './app.controller';
 import { AnswerModule } from './answers/answer.module';
-
+import { PrometheusModule } from '@willsoto/nestjs-prometheus';
 @Module({
   imports: [
+    PrometheusModule.register(),
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: `.env.${process.env.NODE_ENV}`,
