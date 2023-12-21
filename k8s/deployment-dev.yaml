@@ -1,27 +1,30 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: catsnewyear
-
+  name: catsnewyear-dev
+  labels:
+    env: development
 spec:
   strategy:
-    type: 'RollingUpdate'
+    type: 'Recreate'
     # rollingUpdate:
     #   maxUnavailable: 1
     #   maxSurge: 1
   minReadySeconds: 5
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
-      app: catsnewyear
+      app: catsnewyear-dev
+      env: development
   template:
     metadata:
       labels:
-        app: catsnewyear
+        app: catsnewyear-dev
+        env: development
     spec:
       containers:
         - name: catsnewyear
-          image: ghcr.io/medici-mansion/shinnyang-server
+          image: ghcr.io/medici-mansion/shinnyang-server-dev
           resources:
             requests:
               memory: '256Mi'
@@ -33,7 +36,7 @@ spec:
             - containerPort: 3000
           envFrom:
             - secretRef:
-                name: catsnewyear-prod
+                name: catsnewyear-dev
           volumeMounts:
             - name: tz-seoul
               mountPath: /etc/localtime

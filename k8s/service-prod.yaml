@@ -2,6 +2,8 @@ apiVersion: v1
 kind: Service
 metadata:
   name: catsnewyear
+  labels:
+    env: production
 spec:
   ports:
     - port: 80
