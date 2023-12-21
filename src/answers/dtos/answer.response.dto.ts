@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDate, IsOptional, IsString, IsUUID } from 'class-validator';
+import { IsBoolean, IsDate, IsOptional, IsString, IsUUID } from 'class-validator';
 import { Answer } from '../../entities/answer.entity';
 
 export class AnswerDetailDto {
@@ -38,6 +38,9 @@ export class AnswerDetailDto {
   @IsString()
   catName: string;
 
+  @IsBoolean()
+  isRead: boolean;
+
   @ApiProperty({ description: '생성일자' })
   @IsDate()
   createdAt: Date;
@@ -59,6 +62,7 @@ export class AnswerDetailDto {
     this.receiverNickname = answer.receiverNickname;
     this.content = answer.content;
     this.catName = answer.catName;
+    this.isRead = answer.isRead;
     this.createdAt = answer.createdAt;
     this.updatedAt = answer.updatedAt;
     this.deletedAt = answer.deletedAt;

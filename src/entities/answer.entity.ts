@@ -40,4 +40,15 @@ export class Answer extends BaseEntity {
     nullable: false,
   })
   catName: string;
+
+  @Column({
+    name: 'is_read',
+    comment: '읽기 여부',
+    nullable: false,
+  })
+  isRead: boolean | false;
+
+  async updateIsRead() {
+    this.isRead = true;
+  }
 }

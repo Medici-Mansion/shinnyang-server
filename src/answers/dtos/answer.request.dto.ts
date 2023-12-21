@@ -40,5 +40,6 @@ export function toEntity(createAnswerDto: CreateAnswerDto): Answer {
   answer.receiverNickname = createAnswerDto.receiverNickname;
   answer.content = createAnswerDto.content;
   answer.catName = createAnswerDto.catName;
+  answer.isRead = false;
   return answer;
 }
