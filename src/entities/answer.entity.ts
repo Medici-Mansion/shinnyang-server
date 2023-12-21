@@ -31,6 +31,12 @@ export class Answer extends BaseEntity {
   })
   receiverNickname: string;
 
+  @Column({
+    name: 'cat_type',
+    comment: '고양이 타입',
+  })
+  catType: string;
+
   @Column({ name: 'content', comment: '답장 내용', nullable: false })
   content: string;
 

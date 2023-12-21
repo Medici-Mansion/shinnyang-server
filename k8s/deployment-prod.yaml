@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catsnewyear
+  labels:
+    env: production
+spec:
+  strategy:
+    type: "RollingUpdate"
+    # rollingUpdate:
+    #   maxUnavailable: 1
+    #   maxSurge: 1
+  minReadySeconds: 5
+  replicas: 3
+  selector:
+    matchLabels:
+      app: catsnewyear
+      env: production
+  template:
+    metadata:
+      labels:
+        app: catsnewyear
+        env: production
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/path: /metrics
+        prometheus.io/port: '3000'
+    spec:
+      containers:
+        - name: catsnewyear
+          image: sjc.vultrcr.com/medici/shin-server
+          resources:
+            requests:
+              memory: '256Mi'
+              cpu: '500m'
+            limits:
+              memory: '512Mi'
+              cpu: '1000m'
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - secretRef:
+                name: catsnewyear-prod
+          volumeMounts:
+            - name: tz-seoul
+              mountPath: /etc/localtime
+      volumes:
+        - name: tz-seoul
+          hostPath:
+            path: /usr/share/zoneinfo/Asia/Seoul
+      imagePullSecrets:
+        - name: vultr-registry

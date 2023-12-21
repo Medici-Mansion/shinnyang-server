@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catsnewyear-dev
+  labels:
+    env: development
+spec:
+  strategy:
+    type: 'Recreate'
+    # rollingUpdate:
+    #   maxUnavailable: 1
+    #   maxSurge: 1
+  minReadySeconds: 5
+  replicas: 2
+  selector:
+    matchLabels:
+      app: catsnewyear-dev
+      env: development
+  template:
+    metadata:
+      labels:
+        app: catsnewyear-dev
+        env: development
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/path: /metrics
+        prometheus.io/port: '3000'
+    spec:
+      containers:
+        - name: catsnewyear
+          image: ghcr.io/medici-mansion/shinnyang-server-dev
+          resources:
+            requests:
+              memory: '256Mi'
+              cpu: '500m'
+            limits:
+              memory: '512Mi'
+              cpu: '1000m'
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - secretRef:
+                name: catsnewyear-dev
+          volumeMounts:
+            - name: tz-seoul
+              mountPath: /etc/localtime
+      volumes:
+        - name: tz-seoul
+          hostPath:
+            path: /usr/share/zoneinfo/Asia/Seoul
+      imagePullSecrets:
+        - name: vultr-registry
