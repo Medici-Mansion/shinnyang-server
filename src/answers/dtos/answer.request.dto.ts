@@ -3,9 +3,13 @@ import { IsOptional, IsString, IsUUID } from 'class-validator';
 import { Answer } from '../../entities/answer.entity';
 
 export class CreateAnswerDto {
-  @ApiProperty({ description: '보내는 사용자 아이디', default: '{uuid}' })
-  @IsUUID('all')
+  @ApiProperty({
+    description: '보내는 사용자 아이디',
+    default: '{uuid}',
+    nullable: true,
+  })
   @IsOptional()
+  @IsUUID('all')
   senderId: string | null;
 
   @ApiProperty({ description: '보내는 사용자 닉네임', default: '홍길동' })
