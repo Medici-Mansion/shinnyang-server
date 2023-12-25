@@ -62,4 +62,4 @@ jobs:
           manifests: |
             k8s/deployment-dev.yaml
           images: |
-            sjc.vultrcr.com/medici/shin-server-dev:${{ github.sha }}
+            ghcr.io/medici-mansion/shinnyang-server-dev:${{ github.sha }}
