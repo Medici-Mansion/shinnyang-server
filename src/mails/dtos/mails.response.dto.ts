@@ -37,9 +37,15 @@ export class LetterFromMailResponseDTO {
 
   @ApiProperty()
   @IsBoolean()
+  isRead: boolean;
+
+  @ApiProperty()
+  @IsBoolean()
   isRespond: boolean;
 
-  constructor(letter: Mail['letter'] & { replyLetterId: string | null }) {
+  constructor(
+    letter: Mail['letter'] & { replyLetterId: string | null; isRead: boolean },
+  ) {
     this.id = letter.id;
     this.createdAt = letter.createdAt;
     this.updatedAt = letter.updatedAt;
@@ -48,6 +54,7 @@ export class LetterFromMailResponseDTO {
     this.receiverNickname = letter.receiverNickname;
     this.content = letter.content;
     this.catName = letter.catName;
+    this.isRead = letter.isRead;
     this.isRespond = !!letter.replyLetterId;
   }
 }

@@ -30,6 +30,10 @@ export class LetterService {
     const letter = toEntity(userId, createLetterDto);
     const newLetter = await this.lettersRepository.createLetter(letter);
     if (createLetterDto.replyMailId) {
+      // 편지를 보내는사람이 회원 / 비회원
+      // 편지를 받는 사람이 회원 / 비회원
+      // 메일을 보유한 -> 메일함을 통해 답장한 경우
+      // 메일을 보유하지 않은 -> 메일함 없이 답장(링크공유) 또는 편지쓰기 한 경우
       await this.mailsService.updateReplyMail({
         mailId: createLetterDto.replyMailId,
         replyLetterId: newLetter.id,

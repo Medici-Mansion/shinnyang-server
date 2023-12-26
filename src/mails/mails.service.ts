@@ -27,6 +27,7 @@ export class MailsService {
       (mail) =>
         new LetterFromMailResponseDTO({
           ...mail.letter,
+          isRead: mail.isRead,
           replyLetterId: mail.replyLetterId,
         }),
     );
@@ -63,21 +64,28 @@ export class MailsService {
     return true;
   }
 
+  /**
+   * @deprecated
+   * @param updateMailRequetDTO
+   * @returns
+   */
   async updateReplyMail(updateMailRequetDTO: UpdateMailRequetDTO) {
     const repository = this.dataSource.getRepository(Mail);
-    const currentMail = await repository.findOne({
-      where: {
-        id: updateMailRequetDTO.mailId,
-      },
-    });
-
     const existLetter = await this.dataSource
       .createQueryBuilder()
       .from(Letter, 'lt')
       .where('id = :letterId', {
         letterId: updateMailRequetDTO.replyLetterId,
-      });
+      })
+      .getOne();
+
     if (existLetter) {
+      const currentMail = await repository.findOne({
+        where: {
+          id: updateMailRequetDTO.mailId,
+          userId: existLetter.senderId,
+        },
+      });
       currentMail.replyLetterId = updateMailRequetDTO.replyLetterId;
       await repository.save(currentMail);
       return true;
