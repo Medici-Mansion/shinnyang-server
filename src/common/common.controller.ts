@@ -2,6 +2,7 @@ import { Controller, Get } from '@nestjs/common';
 import { CommonService } from './common.service';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CatDTO } from './dto/cat.dto';
+import { AccessoryDTO } from './dto/accessory.dto';
 
 @ApiTags('Common API')
 @Controller('common')
@@ -19,5 +20,18 @@ export class CommonController {
   @Get('cats')
   async getCatsData() {
     return await this.commonService.findAllCats();
+  }
+
+  @ApiOperation({
+    description: '악세사리 정보 조회',
+    summary: '이미지를 보유한 악세사리정보를 조회한다.',
+  })
+  @ApiOkResponse({
+    description: '악세사리 정보 조회 성공',
+    type: [AccessoryDTO],
+  })
+  @Get('accessories')
+  async getAccessoryData() {
+    return await this.commonService.findAllAccessories();
   }
 }

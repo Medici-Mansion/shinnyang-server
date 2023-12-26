@@ -12,6 +12,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
           password: process.env.DB_PWD, //process.env.DB_PWD,
           database: process.env.DB_NAME, //process.env.DB_NAME, // process.env.DB_NAME,
           synchronize: process.env.NODE_ENV !== 'production',
+          schema:
+            process.env.NODE_ENV !== 'production' ? 'development' : 'public',
           logging: process.env.NODE_ENV !== 'production',
           entities: [__dirname + './../**/**.entity{.ts,.js}'],
         };

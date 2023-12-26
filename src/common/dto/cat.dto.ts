@@ -25,11 +25,19 @@ export class CatDTO {
   })
   @IsString()
   image: string;
+  @ApiProperty({
+    description: '보조 이미지 주소',
+    example:
+      'https://res.cloudinary.com/dzfrlb2nb/image/upload/f_auto,q_auto/qrlibxs63hintzlq7jsh.png',
+  })
+  @IsString()
+  subImage: string;
 
   constructor(cats: Cats) {
     this.id = cats.id;
     this.code = cats.code;
     this.image = cats.image;
     this.name = cats.name;
+    this.subImage = cats.subImage;
   }
 }

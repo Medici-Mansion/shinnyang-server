@@ -4,6 +4,7 @@ import { AnswerRepository } from './answer.repository';
 import { createResponse } from '../utils/response.utils';
 import { AnswerDetailDto } from './dtos/answer.response.dto';
 import { RuntimeException } from '@nestjs/core/errors/exceptions';
+import { Answer } from '../entities/answer.entity';
 
 @Injectable()
 export class AnswerService {
@@ -17,8 +18,12 @@ export class AnswerService {
 
   async getAnswerDetail(id: string, answerId: string) {
     const findAnswer = await this.answerRepository.getAnswer(answerId);
-    if (findAnswer.receiverId != id) {
+    if (findAnswer.receiverId !== id) {
       throw new RuntimeException('User Not Found');
+    }
+
+    if (!findAnswer) {
+      await this.updateIsReadFlag(findAnswer);
     }
     return createResponse(new AnswerDetailDto(findAnswer));
   }
@@ -30,5 +35,10 @@ export class AnswerService {
         new AnswerDetailDto(answer);
       }),
     );
+  }
+
+  private async updateIsReadFlag(findAnswer: Answer) {
+    await findAnswer.updateIsRead();
+    await this.answerRepository.save(findAnswer);
   }
 }
