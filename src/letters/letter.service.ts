@@ -4,10 +4,14 @@ import { createResponse } from 'src/utils/response.utils';
 import { LetterDetailDto } from './dtos/letter.response.dto';
 import { Response } from 'src/common/interface';
 import { CreateLetterDto, toEntity } from './dtos/letter.request.dto';
+import { MailsService } from 'src/mails/mails.service';
 
 @Injectable()
 export class LetterService {
-  constructor(private readonly lettersRepository: LetterRepository) {}
+  constructor(
+    private readonly lettersRepository: LetterRepository,
+    private readonly mailsService: MailsService,
+  ) {}
 
   /**
    * 편지를 생성한다.
@@ -25,6 +29,12 @@ export class LetterService {
   ): Promise<Response<LetterDetailDto>> {
     const letter = toEntity(userId, createLetterDto);
     const newLetter = await this.lettersRepository.createLetter(letter);
+    if (createLetterDto.replyMailId) {
+      await this.mailsService.updateReplyMail({
+        mailId: createLetterDto.replyMailId,
+        replyLetterId: newLetter.id,
+      });
+    }
     return createResponse(new LetterDetailDto(newLetter));
   }
 

@@ -1,5 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsBoolean, IsDate, IsOptional, IsString, IsUUID } from 'class-validator';
+import {
+  IsBoolean,
+  IsDate,
+  IsOptional,
+  IsString,
+  IsUUID,
+} from 'class-validator';
 import { Answer } from '../../entities/answer.entity';
 
 export class AnswerDetailDto {
