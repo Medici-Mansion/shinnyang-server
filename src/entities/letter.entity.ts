@@ -24,9 +24,9 @@ export class Letter extends BaseEntity {
   })
   receiverNickname: string;
 
-  @Column({ name: 'content', comment: '편지 내용', nullable: false })
+  @Column({ name: 'content', comment: '편지 내용' })
   content: string;
 
-  @Column( { name: 'cat_name', comment: '고양이 이름', nullable: false })
+  @Column({ name: 'cat_name', comment: '고양이 이름' })
   catName: string;
 }

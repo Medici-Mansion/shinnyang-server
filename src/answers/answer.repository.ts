@@ -21,6 +21,7 @@ export class AnswerRepository extends Repository<Answer> {
     return this.createQueryBuilder('answer')
       .where('answer.receiverId = :id', { id })
       .orderBy('answer.createdAt', 'ASC')
+      .limit(27)
       .getMany();
   }
 }

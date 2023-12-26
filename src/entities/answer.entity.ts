@@ -31,6 +31,12 @@ export class Answer extends BaseEntity {
   })
   receiverNickname: string;
 
+  // @Column({
+  //   name: 'cat_type',
+  //   comment: '고양이 타입',
+  // })
+  // catType: string;
+
   @Column({ name: 'content', comment: '답장 내용', nullable: false })
   content: string;
 
@@ -40,4 +46,16 @@ export class Answer extends BaseEntity {
     nullable: false,
   })
   catName: string;
+
+  @Column({
+    name: 'is_read',
+    comment: '읽기 여부',
+    nullable: false,
+    default: false,
+  })
+  isRead: boolean | false;
+
+  async updateIsRead() {
+    this.isRead = true;
+  }
 }
