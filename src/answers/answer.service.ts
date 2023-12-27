@@ -4,7 +4,7 @@ import { AnswerRepository } from './answer.repository';
 import { createResponse } from '../utils/response.utils';
 import { AnswerDetailDto } from './dtos/answer.response.dto';
 import { RuntimeException } from '@nestjs/core/errors/exceptions';
-import { Answer } from '../entities/answer.entity';
+import { Answer } from '../letters/entities/answer.entity';
 
 @Injectable()
 export class AnswerService {
