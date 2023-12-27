@@ -5,6 +5,9 @@ import { Cats } from './entities/cats.entity';
 import { CatDTO } from './dto/cat.dto';
 import { Accessories } from './entities/accessories.entity';
 import { AccessoryDTO } from './dto/accessory.dto';
+import { UserCatEntity } from './entities/user-cat.entity';
+import { UserCatDto } from './dto/user-cat.dto';
+import { UserCatPatchDto } from './dto/user-cat-patch.dto';
 
 @Injectable()
 export class CommonService {
@@ -32,5 +35,39 @@ export class CommonService {
       },
     });
     return accessories.map((accessory) => new AccessoryDTO(accessory));
+  }
+
+  async findUserCats(id: string): Promise<UserCatDto[]> {
+    const userCats = await this.dataSource.getRepository(UserCatEntity).find({
+      where: { userId: id },
+      relations: {
+        cat: true,
+        accessory: true,
+      },
+    });
+    return userCats.map(
+      (userCat) => new UserCatDto(userCat.cat, userCat.accessory),
+    );
+  }
+
+  async updateUserCatAccessory(id: string, userCatPatchDto: UserCatPatchDto) {
+    const userCat = await this.dataSource.getRepository(UserCatEntity).findOne({
+      where: {
+        userId: id,
+        catId: userCatPatchDto.catId,
+      },
+    });
+    userCat.accessoryId = userCatPatchDto.accessoryId;
+    await this.dataSource.getRepository(UserCatEntity).save(userCat);
+
+    const cat = await this.dataSource
+      .getRepository(Cats)
+      .findOne({ where: { id: userCatPatchDto.catId } });
+
+    const accessory = await this.dataSource
+      .getRepository(Accessories)
+      .findOne({ where: { id: userCatPatchDto.accessoryId } });
+
+    return new UserCatDto(new CatDTO(cat), new AccessoryDTO(accessory));
   }
 }

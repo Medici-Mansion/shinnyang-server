@@ -29,6 +29,13 @@ export class LetterService {
   ): Promise<Response<LetterDetailDto>> {
     const letter = toEntity(userId, createLetterDto);
     const newLetter = await this.lettersRepository.createLetter(letter);
+
+    if (createLetterDto.receiverId) {
+      await this.mailsService.saveMails(createLetterDto.receiverId, {
+        letterId: newLetter.id,
+      });
+    }
+
     if (createLetterDto.replyMailId) {
       // 편지를 보내는사람이 회원 / 비회원
       // 편지를 받는 사람이 회원 / 비회원

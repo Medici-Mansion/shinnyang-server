@@ -6,7 +6,7 @@ metadata:
     env: production
 spec:
   strategy:
-    type: "RollingUpdate"
+    type: 'RollingUpdate'
     # rollingUpdate:
     #   maxUnavailable: 1
     #   maxSurge: 1
@@ -41,6 +41,9 @@ spec:
           envFrom:
             - secretRef:
                 name: catsnewyear-prod
+          env:
+            - name: KUBE_ENV
+              value: public
           volumeMounts:
             - name: tz-seoul
               mountPath: /etc/localtime

@@ -34,11 +34,11 @@ export class AccessoryDTO {
   @IsString()
   iconImage: string;
 
-  constructor(accessory: Accessories) {
-    this.id = accessory.id;
-    this.name = accessory.name;
-    this.code = accessory.code;
-    this.fullImage = accessory.fullImage;
-    this.iconImage = accessory.iconImage;
+  constructor(accessory?: Accessories) {
+    this.id = accessory?.id || '';
+    this.name = accessory?.name || '';
+    this.code = accessory?.code || '';
+    this.fullImage = accessory?.fullImage || '';
+    this.iconImage = accessory?.iconImage || '';
   }
 }
