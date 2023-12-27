@@ -41,6 +41,9 @@ spec:
           envFrom:
             - secretRef:
                 name: catsnewyear-dev
+          env:
+            - name: KUBE_ENV
+              value: development
           volumeMounts:
             - name: tz-seoul
               mountPath: /etc/localtime

@@ -12,6 +12,14 @@ export class CreateLetterDto {
   receiverNickname: string;
 
   @ApiProperty({
+    description: '받는 사용자 아이디 (있을경우 답장으로 간주)',
+    default: '{uuid}',
+  })
+  @IsOptional()
+  @IsUUID()
+  receiverId: string;
+
+  @ApiProperty({
     description: '보낼 편지의 내용',
     default: '이 편지는 영국에서부터 시작되어...',
   })
