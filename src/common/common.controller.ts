@@ -1,6 +1,11 @@
 import { Body, Controller, Get, Patch, UseGuards } from '@nestjs/common';
 import { CommonService } from './common.service';
-import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 import { CatDTO } from './dto/cat.dto';
 import { AccessoryDTO } from './dto/accessory.dto';
 import { UserCatDto } from './dto/user-cat.dto';
@@ -48,6 +53,7 @@ export class CommonController {
     description: '유저냥이 정보 조회 성공',
     type: [UserCatDto],
   })
+  @ApiBearerAuth()
   @Get('user-cat')
   @UseGuards(AccessGuard)
   async getUserCatData(@AuthUser() { id }: Payload) {
@@ -62,6 +68,7 @@ export class CommonController {
     description: '유저냥이 악세사리 변경 성공',
     type: [UserCatDto],
   })
+  @ApiBearerAuth()
   @Patch('accessory')
   @UseGuards(AccessGuard)
   async updateUserCatAccessory(

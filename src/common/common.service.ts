@@ -38,29 +38,16 @@ export class CommonService {
   }
 
   async findUserCats(id: string): Promise<UserCatDto[]> {
-    const userCats = await this.dataSource
-      .getRepository(UserCatEntity)
-      .find({ where: { userId: id } });
-
-    const dtoPromises = userCats.map(async (userCatEntity) => {
-      const catDto = new CatDTO(
-        await this.dataSource.getRepository(Cats).findOne({
-          where: { id: userCatEntity.catId },
-        }),
-      );
-
-      const accessoryDto = new AccessoryDTO(
-        userCatEntity.accessoryId
-          ? await this.dataSource
-              .getRepository(Accessories)
-              .findOne({ where: { id: userCatEntity.accessoryId } })
-          : undefined,
-      );
-
-      return new UserCatDto(catDto, accessoryDto);
+    const userCats = await this.dataSource.getRepository(UserCatEntity).find({
+      where: { userId: id },
+      relations: {
+        cat: true,
+        accessory: true,
+      },
     });
-
-    return await Promise.all(dtoPromises);
+    return userCats.map(
+      (userCat) => new UserCatDto(userCat.cat, userCat.accessory),
+    );
   }
 
   async updateUserCatAccessory(id: string, userCatPatchDto: UserCatPatchDto) {
