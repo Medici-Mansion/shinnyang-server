@@ -6,7 +6,7 @@ import {
   IsString,
   IsUUID,
 } from 'class-validator';
-import { Answer } from '../../entities/answer.entity';
+import { Answer } from '../../letters/entities/answer.entity';
 
 export class AnswerDetailDto {
   @ApiProperty({ description: '답장 아이디', default: '{answerId}' })

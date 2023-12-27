@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional, IsString, IsUUID } from 'class-validator';
-import { Answer } from '../../entities/answer.entity';
+import { Answer } from '../../letters/entities/answer.entity';
 
 export class CreateAnswerDto {
   @ApiProperty({

@@ -8,7 +8,7 @@ import {
   SaveMailRequestDTO,
   UpdateMailRequetDTO,
 } from './dtos/mails.request.dto';
-import { Letter } from 'src/entities/letter.entity';
+import { Letter } from 'src/letters/entities/letter.entity';
 
 @Injectable()
 export class MailsService {

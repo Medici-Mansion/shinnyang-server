@@ -1,6 +1,7 @@
 import { BaseEntity } from 'src/common/entities/base.entity';
-import { Letter } from 'src/entities/letter.entity';
-import { User } from 'src/entities/user.entity';
+import { Letter } from 'src/letters/entities/letter.entity';
+import { User } from 'src/users/entities/user.entity';
+
 import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from 'typeorm';
 
 @Entity({ name: 'mails' })

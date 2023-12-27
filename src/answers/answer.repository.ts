@@ -1,5 +1,5 @@
 import { DataSource, Repository } from 'typeorm';
-import { Answer } from '../entities/answer.entity';
+import { Answer } from '../letters/entities/answer.entity';
 import { InjectDataSource } from '@nestjs/typeorm';
 
 export class AnswerRepository extends Repository<Answer> {

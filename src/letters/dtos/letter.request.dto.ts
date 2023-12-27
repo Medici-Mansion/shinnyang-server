@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional, IsString, IsUUID } from 'class-validator';
-import { Letter } from '../../entities/letter.entity';
+import { Letter } from '../entities/letter.entity';
 
 export class CreateLetterDto {
   @ApiProperty({ description: '보내는 사용자 닉네임', default: '홍길동' })
