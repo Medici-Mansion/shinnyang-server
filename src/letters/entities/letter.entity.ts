@@ -6,7 +6,7 @@ export class Letter extends BaseEntity {
   @Column({
     name: 'sender_id',
     comment: '편지 쓰는 사용자 아이디',
-    nullable: false,
+    nullable: true,
   })
   senderId: string;
 

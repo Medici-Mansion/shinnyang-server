@@ -1,6 +1,6 @@
 {
   "name": "shinnyang",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "",
   "author": {
     "name": "Medici",
@@ -8,7 +8,7 @@
     "url": "https://www.medici-mansion.com"
   },
   "private": true,
-  "license": "UNLICENSED",
+  "license": "MIT",
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
