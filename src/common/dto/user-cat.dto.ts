@@ -22,15 +22,27 @@ export class UserCatDto {
   @ApiProperty({
     description: '악세사리 아이디',
     example: '53227c7f-9dde-4adb-b448-69664fcae813',
+    nullable: true,
+    required: false,
   })
   @IsUUID('all')
   accessoryId?: string;
 
-  @ApiProperty({ description: '악세사리 이름', example: '빵 모자' })
+  @ApiProperty({
+    description: '악세사리 이름',
+    example: '빵 모자',
+    nullable: true,
+    required: false,
+  })
   @IsString()
   accessoryName?: string;
 
-  @ApiProperty({ description: '악세사리 객체코드 ', example: 'AC-H-1' })
+  @ApiProperty({
+    description: '악세사리 객체코드 ',
+    example: 'AC-H-1',
+    nullable: true,
+    required: false,
+  })
   @IsString()
   accessoryCode?: string;
 
