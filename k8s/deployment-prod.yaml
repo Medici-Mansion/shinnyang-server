@@ -43,7 +43,7 @@ spec:
                 name: catsnewyear-prod
           env:
             - name: KUBE_ENV
-              value: development
+              value: public
           volumeMounts:
             - name: tz-seoul
               mountPath: /etc/localtime
