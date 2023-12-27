@@ -19,25 +19,44 @@ export class CatDTO {
   code: string;
 
   @ApiProperty({
-    description: '이미지 주소',
+    description: '메인 (우체국) 이미지 주소',
     example:
       'https://res.cloudinary.com/dzfrlb2nb/image/upload/f_auto,q_auto/qrlibxs63hintzlq7jsh.png',
   })
   @IsString()
   image: string;
+
   @ApiProperty({
-    description: '보조 이미지 주소',
+    description: '얼굴 이미지 주소',
     example:
       'https://res.cloudinary.com/dzfrlb2nb/image/upload/f_auto,q_auto/qrlibxs63hintzlq7jsh.png',
   })
   @IsString()
-  subImage: string;
+  faceImage: string;
+
+  @ApiProperty({
+    description: '뒷모습 이미지 주소',
+    example:
+      'https://res.cloudinary.com/dzfrlb2nb/image/upload/f_auto,q_auto/qrlibxs63hintzlq7jsh.png',
+  })
+  @IsString()
+  backImage: string;
+
+  @ApiProperty({
+    description: '년도 이미지 주소',
+    example:
+      'https://res.cloudinary.com/dzfrlb2nb/image/upload/f_auto,q_auto/qrlibxs63hintzlq7jsh.png',
+  })
+  @IsString()
+  yearImage: string;
 
   constructor(cats: Cats) {
     this.id = cats.id;
     this.code = cats.code;
     this.image = cats.image;
     this.name = cats.name;
-    this.subImage = cats.subImage;
+    this.faceImage = cats.faceImage;
+    this.backImage = cats.backImage;
+    this.yearImage = cats.yearImage;
   }
 }
