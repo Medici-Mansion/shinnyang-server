@@ -10,12 +10,17 @@ import {
 } from './dtos/create-users.dto';
 import { createResponse } from 'src/utils/response.utils';
 import { ChangeNicknameDTO } from './dtos/set-nickname.dto';
+import { UserCatRepository } from '../common/user-cat.repository';
+import { CommonService } from '../common/common.service';
+import { UserCatEntity } from '../common/entities/user-cat.entity';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectDataSource() private readonly connection: DataSource,
     private readonly userRepository: UserRepository,
+    private readonly userCatRepository: UserCatRepository,
+    private readonly commonService: CommonService,
   ) {}
 
   async createUser(postUserRequestDto: PostUserRequestDto) {
@@ -43,6 +48,15 @@ export class UserService {
     const { email } = postUserRequestDto;
     const repository = this.connection.getRepository(User);
     const result = await repository.save(repository.create({ email }));
+
+    const catDtos = await this.commonService.findAllCats();
+    const savePromises = catDtos.map((cat) => {
+      const userCat = new UserCatEntity();
+      userCat.userId = result.id;
+      userCat.catId = cat.id;
+      return this.userCatRepository.save(userCat);
+    });
+    await Promise.all(savePromises);
 
     return result;
   }
