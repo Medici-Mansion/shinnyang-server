@@ -27,6 +27,7 @@ export class MailsService {
       (mail) =>
         new LetterFromMailResponseDTO({
           ...mail.letter,
+          mailId: mail.id,
           isRead: mail.isRead,
           replyLetterId: mail.replyLetterId,
         }),
