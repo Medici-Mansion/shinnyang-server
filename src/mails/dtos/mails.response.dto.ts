@@ -8,6 +8,10 @@ export class LetterFromMailResponseDTO {
   id: string;
 
   @ApiProperty()
+  @IsUUID('all')
+  mailId: string;
+
+  @ApiProperty()
   @IsDate()
   createdAt: Date;
 
@@ -44,9 +48,14 @@ export class LetterFromMailResponseDTO {
   isRespond: boolean;
 
   constructor(
-    letter: Mail['letter'] & { replyLetterId: string | null; isRead: boolean },
+    letter: Mail['letter'] & {
+      replyLetterId: string | null;
+      isRead: boolean;
+      mailId: string;
+    },
   ) {
     this.id = letter.id;
+    this.mailId = letter.mailId;
     this.createdAt = letter.createdAt;
     this.updatedAt = letter.updatedAt;
     this.senderId = letter.senderId;

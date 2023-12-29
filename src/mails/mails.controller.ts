@@ -1,6 +1,15 @@
 import { AccessGuard } from 'src/auth/guards/acess.guard';
 import { MailsService } from './mails.service';
-import { Body, Controller, Get, Post, Put, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseUUIDPipe,
+  Post,
+  Put,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthUser } from 'src/auth/decorators/auth-user.decorator';
 import {
   ApiBearerAuth,
@@ -28,6 +37,16 @@ export class MailsController {
   })
   async getMyMails(@AuthUser() { id }) {
     return await this.mailsService.getMyMails(id);
+  }
+  @Get(':mailId')
+  @ApiOkResponse({
+    type: [LetterFromMailResponseDTO],
+  })
+  async getMyMailById(
+    @AuthUser() { id },
+    @Param('mailId', ParseUUIDPipe) mailId: string,
+  ) {
+    return await this.mailsService.getMyMailById(id, mailId);
   }
 
   @ApiOperation({

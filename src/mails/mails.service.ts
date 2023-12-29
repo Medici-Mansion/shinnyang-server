@@ -14,6 +14,27 @@ import { Letter } from 'src/letters/entities/letter.entity';
 export class MailsService {
   constructor(@InjectDataSource() private readonly dataSource: DataSource) {}
 
+  async getMyMailById(userId: string, mailId: string) {
+    const mail = await this.dataSource.getRepository(Mail).findOne({
+      where: {
+        id: mailId,
+        userId,
+      },
+      relations: {
+        letter: true,
+      },
+    });
+    if (!mail) {
+      throw new BadRequestException();
+    }
+    return new LetterFromMailResponseDTO({
+      ...mail.letter,
+      mailId,
+      isRead: mail.isRead,
+      replyLetterId: mail.replyLetterId,
+    });
+  }
+
   async getMyMails(userId: string) {
     const myMails = await this.dataSource.getRepository(Mail).find({
       where: {
@@ -27,6 +48,7 @@ export class MailsService {
       (mail) =>
         new LetterFromMailResponseDTO({
           ...mail.letter,
+          mailId: mail.id,
           isRead: mail.isRead,
           replyLetterId: mail.replyLetterId,
         }),
