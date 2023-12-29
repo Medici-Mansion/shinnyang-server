@@ -43,6 +43,9 @@ export class MailsService {
       relations: {
         letter: true,
       },
+      order: {
+        createdAt: 'ASC',
+      },
     });
     return myMails.map(
       (mail) =>
@@ -57,14 +60,23 @@ export class MailsService {
 
   async saveMails(id: string, saveMailRequestDTO: SaveMailRequestDTO) {
     const repository = this.dataSource.getRepository(Mail);
-    const newMails = repository.create({
-      userId: id,
-      letterId: saveMailRequestDTO.letterId,
+    const existMail = await repository.findOne({
+      where: {
+        userId: id,
+        letterId: saveMailRequestDTO.letterId,
+      },
     });
+    if (!existMail) {
+      const newMails = repository.create({
+        userId: id,
+        letterId: saveMailRequestDTO.letterId,
+      });
 
-    await repository.save(newMails);
+      await repository.save(newMails);
 
-    return newMails;
+      return newMails;
+    }
+    return existMail;
   }
 
   async readMail(id: string, readMailRequestDTO: ReadMailRequestDTO) {
