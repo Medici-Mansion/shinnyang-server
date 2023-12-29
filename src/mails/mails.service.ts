@@ -43,6 +43,9 @@ export class MailsService {
       relations: {
         letter: true,
       },
+      order: {
+        createdAt: 'ASC',
+      },
     });
     return myMails.map(
       (mail) =>
