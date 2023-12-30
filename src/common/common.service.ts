@@ -60,14 +60,14 @@ export class CommonService {
     userCat.accessoryId = userCatPatchDto.accessoryId;
     await this.dataSource.getRepository(UserCatEntity).save(userCat);
 
-    const cat = await this.dataSource
-      .getRepository(Cats)
-      .findOne({ where: { id: userCatPatchDto.catId } });
+    // const cat = await this.dataSource
+    //   .getRepository(Cats)
+    //   .findOne({ where: { id: userCatPatchDto.catId } });
 
-    const accessory = await this.dataSource
-      .getRepository(Accessories)
-      .findOne({ where: { id: userCatPatchDto.accessoryId } });
+    // const accessory = await this.dataSource
+    //   .getRepository(Accessories)
+    //   .findOne({ where: { id: userCatPatchDto.accessoryId } });
 
-    return new UserCatDto(new CatDTO(cat), new AccessoryDTO(accessory));
+    return true;
   }
 }
