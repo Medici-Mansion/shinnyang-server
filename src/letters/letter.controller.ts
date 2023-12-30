@@ -56,8 +56,8 @@ export class LetterController {
     summary: '편지 보낸사람 업데이트',
     description: '내가보낸 편지의 내 정보가 없을 경우, 업데이트한다',
   })
+  @ApiOkResponse()
   @ApiBearerAuth()
-  @Post()
   @UseGuards(AccessGuard)
   @Patch(':letterId')
   async updateSenderIdByLetter(
