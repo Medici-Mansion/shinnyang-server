@@ -12,7 +12,7 @@ export class LetterRepository extends Repository<Letter> {
   }
 
   async getLetter(letterId: string) {
-    return this.findOne({
+    return this.findOneOrFail({
       where: { id: letterId },
     });
   }
