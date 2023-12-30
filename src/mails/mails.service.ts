@@ -99,7 +99,6 @@ export class MailsService {
   }
 
   /**
-   * @deprecated
    * @param updateMailRequetDTO
    * @returns
    */
