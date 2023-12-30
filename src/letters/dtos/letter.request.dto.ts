@@ -51,5 +51,6 @@ export function toEntity(
   letter.receiverNickname = createLetterDto.receiverNickname;
   letter.content = createLetterDto.content;
   letter.catName = createLetterDto.catName;
+  letter.letterType = createLetterDto.letterType;
   return letter;
 }
