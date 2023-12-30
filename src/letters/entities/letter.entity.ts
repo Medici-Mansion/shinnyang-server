@@ -1,6 +1,11 @@
 import { BaseEntity } from 'src/common/entities/base.entity';
 import { Column, Entity } from 'typeorm';
 
+export enum LETTER_TYPE {
+  LETTER = 'letter',
+  ANSWER = 'ansewr',
+}
+
 @Entity({ name: 'letters' })
 export class Letter extends BaseEntity {
   @Column({
@@ -29,4 +34,13 @@ export class Letter extends BaseEntity {
 
   @Column({ name: 'cat_name', comment: '고양이 이름' })
   catName: string;
+
+  @Column({
+    name: 'letter_type',
+    comment: '편지 타입',
+    type: 'enum',
+    enum: LETTER_TYPE,
+    nullable: true,
+  })
+  letterType: LETTER_TYPE;
 }

@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsOptional, IsString, IsUUID } from 'class-validator';
-import { Letter } from '../entities/letter.entity';
+import { IsEnum, IsOptional, IsString, IsUUID } from 'class-validator';
+import { LETTER_TYPE, Letter } from '../entities/letter.entity';
 
 export class CreateLetterDto {
   @ApiProperty({ description: '보내는 사용자 닉네임', default: '홍길동' })
@@ -34,6 +34,11 @@ export class CreateLetterDto {
   @IsOptional()
   @IsUUID('all')
   replyMailId: string;
+
+  @ApiProperty({ description: '답장하기 일 경우, 답장하는 메일의 아이디' })
+  @IsOptional()
+  @IsEnum(LETTER_TYPE)
+  letterType: LETTER_TYPE;
 }
 
 export function toEntity(
