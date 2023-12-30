@@ -3,7 +3,7 @@ import { Column, Entity } from 'typeorm';
 
 export enum LETTER_TYPE {
   LETTER = 'letter',
-  ANSWER = 'ansewr',
+  ANSWER = 'answer',
 }
 
 @Entity({ name: 'letters' })
