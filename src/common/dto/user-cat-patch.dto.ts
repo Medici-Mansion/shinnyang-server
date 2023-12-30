@@ -1,4 +1,4 @@
-import { IsUUID } from 'class-validator';
+import { IsOptional, IsString, IsUUID } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class UserCatPatchDto {
@@ -12,7 +12,9 @@ export class UserCatPatchDto {
   @ApiProperty({
     description: '악세사리아이디',
     example: 'be17e0ab-6463-4db8-bdfa-bc9011193038',
+    nullable: true,
   })
-  @IsUUID('all')
+  @IsOptional()
+  @IsString()
   accessoryId: string;
 }

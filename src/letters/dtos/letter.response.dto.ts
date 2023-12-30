@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDate, IsOptional, IsString, IsUUID } from 'class-validator';
-import { Letter } from '../entities/letter.entity';
+import { IsDate, IsEnum, IsOptional, IsString, IsUUID } from 'class-validator';
+import { LETTER_TYPE, Letter } from '../entities/letter.entity';
 
 export class LetterDetailDto {
   @ApiProperty({ description: '편지 아이디', default: '{letterId}' })
@@ -46,6 +46,11 @@ export class LetterDetailDto {
   @IsDate()
   deletedAt: Date | null;
 
+  @ApiProperty({ description: '답장하기 일 경우, 답장하는 메일의 아이디' })
+  @IsOptional()
+  @IsEnum(LETTER_TYPE)
+  letterType: LETTER_TYPE;
+
   constructor(letter: Letter) {
     this.id = letter.id;
     this.receiverNickname = letter.receiverNickname;
@@ -56,5 +61,6 @@ export class LetterDetailDto {
     this.createdAt = letter.createdAt;
     this.updatedAt = letter.updatedAt;
     this.deletedAt = letter.deletedAt;
+    this.letterType = letter.letterType;
   }
 }

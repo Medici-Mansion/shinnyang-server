@@ -9,7 +9,6 @@ import { CommonModule } from './common/common.module';
 import Joi from '@hapi/joi';
 import { LetterModule } from './letters/letter.module';
 import { AppController } from './app.controller';
-import { AnswerModule } from './answers/answer.module';
 import { PrometheusModule } from '@willsoto/nestjs-prometheus';
 import { MailsModule } from './mails/mails.module';
 @Module({
@@ -37,7 +36,6 @@ import { MailsModule } from './mails/mails.module';
     OauthModule,
     CommonModule,
     LetterModule,
-    AnswerModule,
     MailsModule,
   ],
   controllers: [AppController],

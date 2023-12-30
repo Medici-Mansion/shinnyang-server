@@ -5,6 +5,7 @@ import { LetterDetailDto } from './dtos/letter.response.dto';
 import { Response } from 'src/common/interface';
 import { CreateLetterDto, toEntity } from './dtos/letter.request.dto';
 import { MailsService } from 'src/mails/mails.service';
+import { IsNull } from 'typeorm';
 
 @Injectable()
 export class LetterService {
@@ -52,5 +53,21 @@ export class LetterService {
   async getLetterDetail(letterId: string): Promise<Response<LetterDetailDto>> {
     const findLetter = await this.lettersRepository.getLetter(letterId);
     return createResponse(new LetterDetailDto(findLetter));
+  }
+
+  async updateSenderIdByLetter(userId: string, letterId: string) {
+    const targetLetter = await this.lettersRepository.findOne({
+      where: {
+        senderId: IsNull(),
+        id: letterId,
+      },
+    });
+
+    if (targetLetter) {
+      targetLetter.senderId = userId;
+      await this.lettersRepository.save(targetLetter);
+      return true;
+    }
+    return false;
   }
 }
