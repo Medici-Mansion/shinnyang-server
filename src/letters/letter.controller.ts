@@ -14,6 +14,7 @@ import {
   Get,
   Param,
   ParseUUIDPipe,
+  Patch,
   Post,
   UseGuards,
 } from '@nestjs/common';
@@ -23,6 +24,7 @@ import { CreateLetterDto } from './dtos/letter.request.dto';
 import { AuthUser } from '../auth/decorators/auth-user.decorator';
 import { OptinalAccessGuard } from 'src/auth/guards/optinal-access.guard';
 import { Payload } from 'src/auth/dtos/jwt.dto';
+import { AccessGuard } from 'src/auth/guards/acess.guard';
 
 @Controller('letters')
 @ApiTags('Letters API')
@@ -48,6 +50,21 @@ export class LetterController {
     @Body() createLetterDto: CreateLetterDto,
   ) {
     return this.lettersService.createLetter(id, createLetterDto);
+  }
+
+  @ApiOperation({
+    summary: '편지 보낸사람 업데이트',
+    description: '내가보낸 편지의 내 정보가 없을 경우, 업데이트한다',
+  })
+  @ApiOkResponse()
+  @ApiBearerAuth()
+  @UseGuards(AccessGuard)
+  @Patch(':letterId')
+  async updateSenderIdByLetter(
+    @AuthUser() { id }: Payload,
+    @Param('letterId') letterId: string,
+  ) {
+    return await this.lettersService.updateSenderIdByLetter(id, letterId);
   }
 
   @ApiOperation({
