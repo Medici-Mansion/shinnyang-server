@@ -109,7 +109,7 @@ export class UserService {
 
   async deleteMe(userId: string) {
     try {
-      const exist = await this.userCatRepository.findOneOrFail({
+      const exist = await this.userRepository.findOneOrFail({
         where: {
           id: userId,
         },
@@ -120,6 +120,7 @@ export class UserService {
       }
       return false;
     } catch (error) {
+      console.log(error);
       throw new BadRequestException();
     }
   }
