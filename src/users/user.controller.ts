@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { AccessGuard } from 'src/auth/guards/acess.guard';
 import { AuthUser } from 'src/auth/decorators/auth-user.decorator';
@@ -34,6 +34,17 @@ export class UserController {
   @UseGuards(AccessGuard)
   @Get('me')
   async getMe(@AuthUser() { id }: Payload) {
+    return await this.userService.getMe(id);
+  }
+
+  @ApiOperation({
+    summary: '회원탈퇴',
+    description: '나의 계정정보를 삭제한다.',
+  })
+  @ApiOkResponse()
+  @UseGuards(AccessGuard)
+  @Delete()
+  async deleteMe(@AuthUser() { id }: Payload) {
     return await this.userService.getMe(id);
   }
 
