@@ -1,6 +1,6 @@
 import { UserRepository } from './user.repository';
 import { UserResponse } from './dtos/user.dto';
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectDataSource } from '@nestjs/typeorm';
 import { User } from 'src/users/entities/user.entity';
 import { DataSource } from 'typeorm';
@@ -104,6 +104,23 @@ export class UserService {
       return true;
     } catch (error) {
       return false;
+    }
+  }
+
+  async deleteMe(userId: string) {
+    try {
+      const exist = await this.userCatRepository.findOneOrFail({
+        where: {
+          id: userId,
+        },
+      });
+      if (exist) {
+        await this.userRepository.softDelete({ id: userId });
+        return true;
+      }
+      return false;
+    } catch (error) {
+      throw new BadRequestException();
     }
   }
 }
