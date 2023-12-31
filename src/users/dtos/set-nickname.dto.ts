@@ -1,9 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, MaxLength } from 'class-validator';
+import { IsString } from 'class-validator';
+import { MaxByteLength } from '../validator/max-length-byte.validator';
 
 export class ChangeNicknameDTO {
   @ApiProperty({ description: '번경할 닉네임', default: '츄츄' })
   @IsString()
-  @MaxLength(6)
+  @MaxByteLength(6)
   nickname: string;
 }
