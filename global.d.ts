@@ -10,6 +10,8 @@ declare namespace NodeJS {
     readonly GOOGLE_AUTH_CLIENT_ID: string;
     readonly GOOGLE_REDIRECT_URL: string;
     readonly OOGLE_AUTH_CLIENT_SECRET: string;
+    readonly KAKAO_CLIENT_ID: string;
+    readonly KAKAO_REDIRECT_URL: string;
     readonly SALT: string;
     readonly ROUND: string;
     readonly EXPIRESTOKEN: string;
