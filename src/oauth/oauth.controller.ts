@@ -1,4 +1,12 @@
-import { Controller, Get, Param, Post, Query, Res } from '@nestjs/common';
+import {
+  BadRequestException,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Query,
+  Res,
+} from '@nestjs/common';
 import { OauthService } from './oauth.service';
 import { Response } from 'express';
 import {
@@ -40,11 +48,15 @@ export class OauthController {
     @Param('serviceName', new ParseExplicitEnumPipe(ServiceProvider))
     serviceName: ServiceProvider,
     @Query('code') code: string,
-    // @Query('state') state: string,
   ): Promise<JWT> {
     switch (serviceName) {
       case ServiceProvider.GOOGLE:
         return await this.oauthService.userFromGoogle(code);
+      case ServiceProvider.KAKAO:
+        return await this.oauthService.userFromKakao(code);
+      default:
+        break;
     }
+    throw new BadRequestException();
   }
 }

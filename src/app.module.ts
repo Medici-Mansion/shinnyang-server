@@ -22,6 +22,8 @@ import { MailsModule } from './mails/mails.module';
         GOOGLE_AUTH_CLIENT_ID: Joi.string().required(),
         GOOGLE_AUTH_CLIENT_SECRET: Joi.string().required(),
         GOOGLE_REDIRECT_URL: Joi.string().required(),
+        KAKAO_CLIENT_ID: Joi.string().required(),
+        KAKAO_REDIRECT_URL: Joi.string().required(),
         DB_HOST: Joi.string().required(),
         DB_PORT: Joi.string().required(),
         DB_USER: Joi.string().required(),
