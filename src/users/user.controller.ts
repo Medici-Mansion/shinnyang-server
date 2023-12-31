@@ -45,7 +45,7 @@ export class UserController {
   @UseGuards(AccessGuard)
   @Delete()
   async deleteMe(@AuthUser() { id }: Payload) {
-    return await this.userService.getMe(id);
+    return await this.userService.deleteMe(id);
   }
 
   @ApiOperation({
