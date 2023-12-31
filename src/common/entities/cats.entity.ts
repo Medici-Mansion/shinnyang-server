@@ -24,4 +24,11 @@ export class Cats extends BaseEntity {
 
   @Column({ name: 'year_image', comment: '년도 이미지 경로', nullable: true })
   yearImage: string;
+
+  @Column({
+    name: 'stamp_image',
+    comment: '스탬프 이미지 경로',
+    nullable: true,
+  })
+  stampImage: string;
 }

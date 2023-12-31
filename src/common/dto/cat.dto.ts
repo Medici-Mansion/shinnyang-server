@@ -50,6 +50,14 @@ export class CatDTO {
   @IsString()
   yearImage: string;
 
+  @ApiProperty({
+    description: '스탬프 이미지 주소',
+    example:
+      'https://res.cloudinary.com/dzfrlb2nb/image/upload/f_auto,q_auto/qrlibxs63hintzlq7jsh.png',
+  })
+  @IsString()
+  stampImage: string;
+
   constructor(cats: Cats) {
     this.id = cats.id;
     this.code = cats.code;
@@ -58,5 +66,6 @@ export class CatDTO {
     this.faceImage = cats.faceImage;
     this.backImage = cats.backImage;
     this.yearImage = cats.yearImage;
+    this.stampImage = cats.stampImage;
   }
 }
