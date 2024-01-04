@@ -12,14 +12,12 @@ export class BaseEntity {
   @CreateDateColumn({
     name: 'created_at',
     comment: '생성일자',
-    default: new Date(),
   })
   createdAt: Date;
 
   @UpdateDateColumn({
     name: 'updated_at',
     comment: '수정일자',
-    default: new Date(),
   })
   updatedAt: Date;
 
