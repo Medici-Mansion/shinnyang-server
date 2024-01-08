@@ -123,7 +123,7 @@ export class OauthService {
         scope: string;
         refresh_token_expires_in: number;
       }>(
-        'https://kauth.kakao.com/oauth/token	',
+        'https://kauth.kakao.com/oauth/token',
         {
           code,
           grant_type: 'authorization_code',
