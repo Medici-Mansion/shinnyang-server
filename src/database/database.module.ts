@@ -13,7 +13,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
           database: process.env.DB_NAME, //process.env.DB_NAME, // process.env.DB_NAME,
           synchronize: process.env.NODE_ENV !== 'production',
           schema:
-            process.env.NODE_ENV !== 'production'
+            process.env.NODE_ENV === 'production'
               ? 'public'
               : process.env.KUBE_ENV ?? 'development',
           logging: process.env.NODE_ENV !== 'production',
