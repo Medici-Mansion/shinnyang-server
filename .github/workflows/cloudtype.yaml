@@ -1,0 +1,71 @@
+name: Deploy to cloudtype
+on:
+  push:
+    branches:
+      - master
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Connect deploy key
+        uses: cloudtype-github-actions/connect@v1
+        with:
+          token: ${{ secrets.CLOUDTYPE_TOKEN }}
+          ghtoken: ${{ secrets.GHP_TOKEN }}
+      - name: Deploy
+        uses: cloudtype-github-actions/deploy@v1
+        with:
+          token: ${{ secrets.CLOUDTYPE_TOKEN }}
+          project: raymondanythings/catsnewyear
+          stage: main
+          yaml: |
+            name: shinnyang-server
+            app: node@20
+            options:
+              env:
+                - name: NODE_ENV
+                  value: production
+                - name: DB_HOST
+                  secret: DB_HOST
+                - name: DB_NAME
+                  secret: DB_NAME
+                - name: DB_PORT
+                  secret: DB_PORT
+                - name: DB_PWD
+                  secret: DB_PWD
+                - name: DB_USER
+                  secret: DB_USER
+                - name: EXPIRESTOKEN
+                  secret: EXPIRESTOKEN
+                - name: GOOGLE_API_KEY
+                  secret: GOOGLE_API_KEY
+                - name: GOOGLE_AUTH_CLIENT_ID
+                  secret: GOOGLE_AUTH_CLIENT_ID
+                - name: GOOGLE_AUTH_CLIENT_SECRET
+                  secret: GOOGLE_AUTH_CLIENT_SECRET
+                - name: GOOGLE_REDIRECT_URL
+                  secret: GOOGLE_REDIRECT_URL
+                - name: KAKAO_CLIENT_ID
+                  secret: KAKAO_CLIENT_ID
+                - name: KAKAO_REDIRECT_URL
+                  secret: KAKAO_REDIRECT_URL
+                - name: PORT
+                  secret: PORT
+                - name: RES_EXPIRESTOKEN
+                  secret: RES_EXPIRESTOKEN
+                - name: ROUND
+                  secret: ROUND
+                - name: SALT
+                  secret: SALT
+                - name: TZ
+                  secret: TZ
+              ports: 3000
+              install: npm i
+              build: npm run build
+              start: npm start
+            context:
+              git:
+                url: git@github.com:${{ github.repository }}.git
+                ref: ${{ github.ref }}
