@@ -7,19 +7,21 @@ export class KakaoShareCallbackStatistic extends BaseEntity {
   @Column({
     name: 'chat_type',
     comment: `카카오톡 공유 메시지가 전달된 채팅방의 타입`,
+    nullable: true,
   })
   chatType: string;
 
   @Column({
     name: 'hash_chat_id',
     comment: '카카오톡 공유 메세지를 수신한 채팅방의 참고용 ID',
+    nullable: true,
   })
   hashChatId: string;
 
-  @Column({ name: 'template_id', comment: '메세지 템플릿 ID' })
+  @Column({ name: 'template_id', comment: '메세지 템플릿 ID', nullable: true })
   templateId: number;
 
-  @Column({ name: 'letter_id', type: 'uuid' })
+  @Column({ name: 'letter_id', type: 'uuid', nullable: true })
   letterId: string;
 
   @Column({
