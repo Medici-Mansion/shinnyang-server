@@ -11,6 +11,7 @@ import { LetterModule } from './letters/letter.module';
 import { AppController } from './app.controller';
 import { PrometheusModule } from '@willsoto/nestjs-prometheus';
 import { MailsModule } from './mails/mails.module';
+import { StatisticsModule } from './statistics/statistics.module';
 @Module({
   imports: [
     PrometheusModule.register(),
@@ -39,6 +40,7 @@ import { MailsModule } from './mails/mails.module';
     CommonModule,
     LetterModule,
     MailsModule,
+    StatisticsModule,
   ],
   controllers: [AppController],
   providers: [],
