@@ -15,7 +15,13 @@ export class StatisticsService {
     );
 
     await repository.save(
-      repository.create(createKakaoShareStatisticRequestDto),
+      repository.create({
+        chatType: createKakaoShareStatisticRequestDto.CHAT_TYPE,
+        hashChatId: createKakaoShareStatisticRequestDto.HASH_CHAT_ID,
+        templateId: createKakaoShareStatisticRequestDto.TEMPLATE_ID,
+        letterId: createKakaoShareStatisticRequestDto.letterId,
+        letterType: createKakaoShareStatisticRequestDto.letterType,
+      }),
     );
     return null;
   }
