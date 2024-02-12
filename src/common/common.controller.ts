@@ -13,6 +13,7 @@ import { AccessGuard } from '../auth/guards/acess.guard';
 import { AuthUser } from '../auth/decorators/auth-user.decorator';
 import { Payload } from '../auth/dtos/jwt.dto';
 import { UserCatPatchDto } from './dto/user-cat-patch.dto';
+import { LetterCountDTO } from './dto/letter-count.dto';
 
 @ApiTags('Common API')
 @Controller('common')
@@ -76,5 +77,18 @@ export class CommonController {
     @Body() userCatPatchDto: UserCatPatchDto,
   ) {
     return await this.commonService.updateUserCatAccessory(id, userCatPatchDto);
+  }
+
+  @ApiOperation({
+    description: '편지 갯수 조회',
+    summary: '만들어진 편지 갯수를 조회한다',
+  })
+  @ApiOkResponse({
+    description: '편지 갯수 조회 성공',
+    type: LetterCountDTO,
+  })
+  @Get('letter-count')
+  async getLetterCount() {
+    return await this.commonService.getLetterCount();
   }
 }

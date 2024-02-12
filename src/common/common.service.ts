@@ -8,6 +8,8 @@ import { AccessoryDTO } from './dto/accessory.dto';
 import { UserCatEntity } from './entities/user-cat.entity';
 import { UserCatDto } from './dto/user-cat.dto';
 import { UserCatPatchDto } from './dto/user-cat-patch.dto';
+import { Letter } from 'src/letters/entities/letter.entity';
+import { LetterCountDTO } from './dto/letter-count.dto';
 
 @Injectable()
 export class CommonService {
@@ -69,5 +71,13 @@ export class CommonService {
     //   .findOne({ where: { id: userCatPatchDto.accessoryId } });
 
     return true;
+  }
+
+  async getLetterCount() {
+    const response = await this.dataSource.manager
+      .getRepository(Letter)
+      .count();
+    console.log(response);
+    return new LetterCountDTO(response);
   }
 }
